@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Belajar Komputasi</title>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8e8e8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0,90,171,255);
+            color: #ffffff;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 350px;
+            margin: 15px;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.8); /* Darken the background image */
+            z-index: 0;
+        }
+
+        #materi::before {
+            background-image: url('assets/image/download.png');
+        }
+
+        #latihan::before {
+            background-image: url('assets/image/latihan.jpg');
+        }
+
+        .box div {
+            position: relative;
+            z-index: 1;
+        }
+
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .box {
+                width: 80%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Media Belajar Pengenalan Komputasi</h1>
+    <div class="container">
+        <!-- Wrapped each box in an anchor tag to make the entire box clickable -->
+        <a href="materi/materi.html" class="box" id="materi">
+            <div>Materi</div>
+        </a>
+        <a href="#" class="box" id="latihan">
+            <div>Latihan</div>
+        </a>
+    </div>
+</body>
+</html>
