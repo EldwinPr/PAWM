@@ -5,28 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syntax Test Page</title>
     <style>
-        /* Add your CSS styles here */
+        body {
+            padding: 10px;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0,90,171,255);
+            color: #ffffff;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .question-container {
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background-color: gray;
+            padding: 10px;
+            color: white;
+        }
+        .answer {
+            display: flex;
+            align-items: center;
+        }
+        .answer input {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
-    <h1>Syntax Test</h1>
+    <h1>Lengkapi Syntax di Bawah</h1>
     <div class="question-container">
-        <div class="question">
-            <p>1. What is the correct HTML tag for inserting a line break?</p>
-            <input type="text" id="answer1" placeholder="Your answer here">
+        <div class="question" id="question1">
+            <p>syntax digunakan untuk mencetak</p>
+            <div class="answer">
+                <input type="text" id="answer1" maxlength="5" size="5">
+                <p>("hello world")</p>
+            </div>
+            <p id="feedback" style="display: none;"></p>
+            <button>submit</button>
         </div>
-
-        <div class="question">
-            <p>2. How do you create a hyperlink in HTML?</p>
-            <input type="text" id="answer2" placeholder="Your answer here">
-        </div>
-
-        <div class="question">
-            <p>3. What is the correct syntax for referring to an external JavaScript file?</p>
-            <input type="text" id="answer3" placeholder="Your answer here">
-        </div>
-
-        <button id="submitBtn">Submit Answers</button>
     </div>
+    <script>
+        document.querySelector('button').addEventListener('click', function() {
+            const feedback = document.getElementById('feedback');
+            const answer = document.getElementById('answer1').value.trim();
+            const questionContainer = document.getElementById('question1');
+            if (answer.toLowerCase() === 'print') {
+                questionContainer.style.backgroundColor = 'green';
+                feedback.style.display = 'block';
+                feedback.textContent = 'Jawaban Benar!';
+                feedback.style.color = 'white';
+                questionContainer.style.backgroundColor = 'green';
+                alert('Correct!');
+            } else if (answer === '') {
+                questionContainer.style.backgroundColor = 'red';
+                feedback.style.display = 'block';
+                feedback.textContent = 'Jawaban Masih Kosong!';
+                feedback.style.color = 'white';
+                questionContainer.style.backgroundColor = 'red';
+            } else {
+                questionContainer.style.backgroundColor = 'red';
+                feedback.style.display = 'block';
+                feedback.textContent = 'Jawaban Salah!';
+                feedback.style.color = 'white';
+                questionContainer.style.backgroundColor = 'red';            }
+        });
+    </script>
 </body>
 </html>
