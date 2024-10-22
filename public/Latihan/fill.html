@@ -4,24 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syntax Test Page</title>
+    <link rel="stylesheet" href="../styles.css">
     <style>
-        body {
-            padding: 10px;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            color: #333;
-            line-height: 1.6;
-        }
-        h1 {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(0,90,171,255);
-            color: #ffffff;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-        }
         .question-container {
             margin: 20px;
         }
@@ -38,6 +22,13 @@
         }
         .answer input {
             margin-right: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -75,7 +66,7 @@
             } else {
                 questionContainer.style.backgroundColor = 'red';
                 feedback.style.display = 'block';
-                feedback.textContent = 'Jawaban Salah!';
+                feedback.textContent = 'SALAH DONGO!';
                 feedback.style.color = 'white';
                 questionContainer.style.backgroundColor = 'red';            }
         });

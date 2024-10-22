@@ -1,0 +1,33 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    line-height: 1.6;
+}
+
+h1 {
+    padding: 20px;
+    background-color: rgba(0, 90, 171, 1);
+    color: #ffffff;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #005aab;
+    color: white;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #004080;
+}
