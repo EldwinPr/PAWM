@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Exercise</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .drag-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 20px;
+        }
+        .draggable {
+            padding: 15px;
+            background-color: #005aab;
+            color: white;
+            margin: 10px;
+            cursor: grab;
+            border-radius: 5px;
+        }
+        .dropzone {
+            width: 200px;
+            height: 100px;
+            border: 2px dashed #005aab;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+        }
+        .correct {
+            background-color: green;
+            color: white;
+        }
+        .incorrect {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Drag and Drop Exercise</h1>
+    <div class="drag-container">
+        <div id="draggable1" class="draggable" draggable="true">Drag Me 1</div>
+        <div id="draggable2" class="draggable" draggable="true">Drag Me 2</div>
+        <div id="draggable3" class="draggable" draggable="true">Drag Me 3</div>
+    </div>
+
+    <div class="drag-container">
+        <div id="dropzone1" class="dropzone">Drop Here 1</div>
+        <div id="dropzone2" class="dropzone">Drop Here 2</div>
+        <div id="dropzone3" class="dropzone">Drop Here 3</div>
+    </div>
+
+    <script>
+        const draggables = document.querySelectorAll('.draggable');
+        const dropzones = document.querySelectorAll('.dropzone');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', () => {
+                draggable.classList.add('dragging');
+            });
+
+            draggable.addEventListener('dragend', () => {
+                draggable.classList.remove('dragging');
+            });
+        });
+
+        dropzones.forEach(dropzone => {
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('hovered');
+            });
+
+            dropzone.addEventListener('dragleave', () => {
+                dropzone.classList.remove('hovered');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const draggable = document.querySelector('.dragging');
+                if (draggable) {
+                    dropzone.classList.remove('hovered');
+                    dropzone.textContent = draggable.textContent;
+                    if (dropzone.id === `dropzone${draggable.id.slice(-1)}`) {
+                        dropzone.classList.add('correct');
+                    } else {
+                        dropzone.classList.add('incorrect');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
