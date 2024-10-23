@@ -4,31 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drag and Drop Exercise</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <style>
         .drag-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: center;
             margin: 20px;
         }
+        .sentence-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+        .word-slot {
+            width: 150px;
+            height: 50px;
+            border-bottom: 2px solid #005aab;
+            margin: 0 10px;
+            text-align: center;
+        }
         .draggable {
-            padding: 15px;
+            padding: 10px;
             background-color: #005aab;
             color: white;
-            margin: 10px;
             cursor: grab;
             border-radius: 5px;
+            margin: 5px;
+            transition: transform 0.2s ease;
+        }
+        .draggable:hover {
+            transform: scale(1.1);
         }
         .dropzone {
-            width: 200px;
-            height: 100px;
-            border: 2px dashed #005aab;
-            border-radius: 10px;
+            width: 150px;
+            height: 50px;
+            border-bottom: 2px solid #005aab;
+            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .dropzone.hovered {
+            background-color: #e0e0e0;
         }
         .correct {
             background-color: green;
@@ -38,25 +57,45 @@
             background-color: red;
             color: white;
         }
+        button {
+            padding: 15px 30px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #005aab;
+            color: white;
+            transition: background-color 0.3s ease;
+            margin: 20px;
+        }
+        button:hover {
+            background-color: #004080;
+        }
     </style>
 </head>
 <body>
     <h1>Drag and Drop Exercise</h1>
-    <div class="drag-container">
-        <div id="draggable1" class="draggable" draggable="true">Drag Me 1</div>
-        <div id="draggable2" class="draggable" draggable="true">Drag Me 2</div>
-        <div id="draggable3" class="draggable" draggable="true">Drag Me 3</div>
+
+    <!-- Sentence to Complete -->
+    <div class="sentence-container">
+        <div class="word-slot dropzone" id="dropzone1"></div>
+        <div class="word-slot dropzone" id="dropzone2"></div>
     </div>
 
-    <div class="drag-container">
-        <div id="dropzone1" class="dropzone">Drop Here 1</div>
-        <div id="dropzone2" class="dropzone">Drop Here 2</div>
-        <div id="dropzone3" class="dropzone">Drop Here 3</div>
+    <!-- Draggable Words -->
+    <div class="drag-container" id="answer-container">
+        <div id="draggable1" class="draggable" draggable="true">Print</div>
+        <div id="draggable2" class="draggable" draggable="true">("Hello World")</div>
+        <div id="draggable3" class="draggable" draggable="true">System.out.Println</div>
     </div>
+
+    <button id="checkButton">Check Answers</button>
+    <button id="resetButton">Reset</button>
 
     <script>
         const draggables = document.querySelectorAll('.draggable');
         const dropzones = document.querySelectorAll('.dropzone');
+        const answerContainer = document.getElementById('answer-container');
 
         draggables.forEach(draggable => {
             draggable.addEventListener('dragstart', () => {
@@ -83,14 +122,39 @@
                 const draggable = document.querySelector('.dragging');
                 if (draggable) {
                     dropzone.classList.remove('hovered');
-                    dropzone.textContent = draggable.textContent;
-                    if (dropzone.id === `dropzone${draggable.id.slice(-1)}`) {
-                        dropzone.classList.add('correct');
-                    } else {
-                        dropzone.classList.add('incorrect');
+                    if (dropzone.querySelector('.draggable')) {
+                        answerContainer.appendChild(dropzone.querySelector('.draggable'));
                     }
+                    dropzone.appendChild(draggable);
                 }
             });
+        });
+
+        document.getElementById('checkButton').addEventListener('click', () => {
+            const correctAnswers = ['Print', '("Hello World")'];
+            let isCorrect = true;
+
+            dropzones.forEach((dropzone, index) => {
+                const draggable = dropzone.querySelector('.draggable');
+                if (draggable && draggable.textContent === correctAnswers[index]) {
+                    dropzone.classList.add('correct');
+                    dropzone.classList.remove('incorrect');
+                } else {
+                    dropzone.classList.add('incorrect');
+                    dropzone.classList.remove('correct');
+                    isCorrect = false;
+                }
+            });
+
+            if (isCorrect) {
+                alert('All answers are correct!');
+            } else {
+                alert('Some answers are incorrect. Please try again.');
+            }
+        });
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            window.location.reload();
         });
     </script>
 </body>
