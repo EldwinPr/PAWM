@@ -3,97 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Belajar Komputasi</title>
-    <link rel="stylesheet" href="styles.css">
-
+    <title>Pylearn - Belajar Python</title>
     <style>
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 5% auto;
-            width: 90%;
-            max-width: 1200px;
-        }
-
-        .box {
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
             display: flex;
             flex-direction: column;
+        }
+
+        .gradient-section {
+            background: linear-gradient(135deg, #1e1e1e, #f39c12);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
             align-items: center;
-            justify-content: flex-end;
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: 350px;
-            margin: 15px;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 20px;
             text-align: center;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .header-text {
             color: white;
-            font-size: 1.5em;
-            font-weight: bold;
-            font-family: 'Roboto', sans-serif;
         }
 
-        .box::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.8); /* Darken the background image */
-            z-index: 0;
+        .header-text h1 {
+            font-size: 100px;
+            margin: 0;
+            color: #ffc107;
         }
 
-        #materi::before {
-            background-image: url('assets/image/download.png');
+        .header-text p {
+            font-size: 36px;
+            color: #ffffff;
         }
 
-        #latihan::before {
-            background-image: url('assets/image/latihan.jpg');
+        .title-image {
+            width: 200px;
         }
 
-        .box div {
-            position: relative;
-            z-index: 1;
+        .start-btn {
+            background-color: #ffb74d;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-size: 28px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .box:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        .start-btn:hover {
+            background-color: #ffa726;
+        }
+
+        .icons {
+            width: 200px;
+        }
+
+        /* Section for Materi & Latihan */
+        .yellow-section {
+            background-color: #ffc107;
+            padding: 100px 0;
+            height: 100vh;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 400px;
+            height: 450px;
+            background-color: #212121;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 140px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            background-color: #0d47a1;
+            padding: 40px;
+            color: white;
+            text-align: center;
         }
 
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
+            .header-text h1 {
+                font-size: 50px;
             }
 
-            .box {
-                width: 80%;
+            .header-text p {
+                font-size: 24px;
+            }
+
+            .start-btn {
+                font-size: 24px;
+                padding: 15px 30px;
+            }
+
+            .card {
+                width: 300px;
+                height: 350px;
+            }
+
+            .card img {
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-text h1 {
+                font-size: 32px;
+            }
+
+            .header-text p {
+                font-size: 18px;
+            }
+
+            .start-btn {
+                font-size: 18px;
+                padding: 8px 16px;
+            }
+
+            .icons {
+                width: 100px;
+            }
+
+            .card {
+                width: 200px;
+                height: 250px;
+            }
+
+            .card img {
+                width: 80px;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <script>
+        function scrollToContent() {
+            document.querySelector('.yellow-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </head>
-
 <body>
-    <h1>Media Belajar Pengenalan Komputasi</h1>
-    <div class="container">
-        <!-- Wrapped each box in an anchor tag to make the entire box clickable -->
-        <a href="materi/materi.html" class="box" id="materi">
-            <div>Materi</div>
-        </a>
-        <a href="Latihan/latihan.html" class="box" id="latihan">
-            <div>Latihan</div>
-        </a>
+    <!-- Gradient Section for Header -->
+    <div class="gradient-section">
+        <div class="container">
+            <!-- Header Section -->
+            <div class="header">
+                <div class="icons">
+                    <img class="title-image" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Icon">
+                </div>
+                <div class="header-text">
+                    <h1><span style="color: #3670a1;">Py</span>learn</h1>
+                    <p>Belajar Python dengan interaktif</p>
+                    <button class="start-btn" onclick="scrollToContent()">Mulai Belajar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yellow Section for Materi & Latihan -->
+    <div class="yellow-section">
+        <div class="container">
+            <!-- Content Section -->
+            <div class="content">
+                <div class="card" onclick="window.location.href='materi/materi.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Materi">
+                    <h2>Materi</h2>
+                </div>
+                <div class="card" onclick="window.location.href='latihan/latihan.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="Latihan">
+                    <h2>Latihan</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2024 Pylearn | Belajar Python dengan mudah</p>
     </div>
 </body>
 </html>
