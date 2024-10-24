@@ -4,125 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syntax Test Page</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
             background-color: #f1e0ab;
-            color: #ffffff;
             text-align: center;
         }
-
-        h1 {
-            font-size: 3em;
-            color: #212121;
-            margin-top: 40px;
-        }
-
         .question-container {
-            max-width: 800px;
+            width: 80%;
             margin: 40px auto;
-            background-color: #5c5c5c;
+            background-color: #ffffff;
             padding: 30px;
             border-radius: 15px;
         }
-
         .question {
             margin-bottom: 20px;
             font-size: 1.2em;
+            color: rgb(0, 0, 0);
         }
-
         .answer {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-top: 20px;
         }
-
         .answer input {
             margin-right: 10px;
             padding: 10px;
             font-size: 1em;
             border-radius: 5px;
-            border: none;
+            border: 2px solid #005aab;
         }
-
-        button {
-            padding: 15px 30px;
-            border-radius: 25px;
-            background-color: #ffb74d;
-            color: #212121;
-            font-size: 1.2em;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            background-color: #ffa726;
-        }
-
         #feedback {
             font-size: 1.2em;
             margin-top: 20px;
             font-weight: bold;
         }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
-            }
-            .question-container {
-                padding: 20px;
-            }
-            .question {
-                font-size: 1em;
-            }
-            .answer input {
-                font-size: 0.9em;
-                padding: 8px;
-            }
-            button {
-                padding: 12px 25px;
-                font-size: 1em;
-            }
-            #feedback {
-                font-size: 1em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2em;
-            }
-            .question-container {
-                padding: 15px;
-            }
-            .question {
-                font-size: 0.9em;
-            }
-            .answer {
-                flex-direction: column;
-            }
-            .answer input {
-                margin-bottom: 10px;
-                font-size: 0.8em;
-                padding: 6px;
-            }
-            button {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-            #feedback {
-                font-size: 0.9em;
-            }
-        }
     </style>
 </head>
 <body>
-    <h1>Lengkapi Syntax di Bawah</h1>
+    <header>
+        <div class="header-left">
+            <h2 style="display: inline-block; margin: 0;">PyLearn</h2>
+        </div>
+        <nav class="header-right">
+            <a href="../index.html">Home</a>
+            <a href="../materi/">Materi</a>
+            <a href="latihan.html">Latihan</a>
+        </nav>
+    </header>
+
     <div class="question-container">
         <div class="question" id="question1">
             <p>Syntax digunakan untuk mencetak:</p>

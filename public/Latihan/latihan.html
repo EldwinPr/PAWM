@@ -4,36 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise Selection Page</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            background-color: #f1e0ab;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 50px;
-        }
-        h1 {
-            font-size: 2.5em;
-            color: #333;
-        }
         button {
             padding: 15px 30px;
             font-size: 1.2em;
-            margin: 20px;
             cursor: pointer;
             border: none;
-            border-radius: 10px;
-            background-color: #005aab;
-            color: white;
-            transition: background-color 0.3s ease;
+            margin: 20px;
         }
-        button:hover {
-            background-color: #004080;
+        .content-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 40px auto;
         }
     </style>
 </head>
 <body>
-    <h1>Pilih Latihan</h1>
-    <button onclick="window.location.href='fill.html'">Fill in The Blanks</button>
-    <button onclick="window.location.href='drag.html'">Drag and Drop</button>
+    <header>
+        <div class="header-left">
+            <h2 style="display: inline-block; margin: 0;">PyLearn</h2>
+        </div>
+        <nav class="header-right">
+            <a href="../index.html">Home</a>
+            <a href="../materi/">Materi</a>
+            <a href="latihan.html">Latihan</a>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="content-section">
+            <button onclick="window.location.href='fill.html'">Fill in The Blanks</button>
+            <button onclick="window.location.href='drag.html'">Drag and Drop</button>
+            <button onclick="window.location.href='online-comp.html'">Online Compiler</button>
+        </div>
+    </main>
 </body>
 </html>

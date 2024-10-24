@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Compiler</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .content-section {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        textarea {
+            width: 90%;
+            height: 300px;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 10px;
+            border: 2px solid #005aab;
+            margin-bottom: 20px;
+            resize: vertical;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .output-container {
+            background: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h2 style="display: inline-block; margin: 0;">PyLearn</h2>
+        </div>
+        <nav class="header-right">
+            <a href="../index.html">Home</a>
+            <a href="../materi/">Materi</a>
+            <a href="latihan.html">Latihan</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content-section">
+            <h2>Write Your Code Below</h2>
+            <textarea id="codeInput" placeholder="Write your code here..."></textarea>
+            <div>
+                <button onclick="runCode()">Run Code</button>
+            </div>
+        </div>
+        <div class="output-container" id="outputContainer">
+            <h3>Output</h3>
+            <pre id="output"></pre>
+        </div>
+    </main>
+    <script>
+        async function runCode() {
+            const code = document.getElementById('codeInput').value;
+            const outputContainer = document.getElementById('output');
+
+            const data = {
+                language_id: 71,
+                source_code: code,
+            };
+
+            try {
+                const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.judge0.com/submissions/?base64_encoded=false&wait=true', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.stdout) {
+                    outputContainer.textContent = result.stdout;
+                } else if (result.stderr) {
+                    outputContainer.textContent = result.stderr;
+                } else {
+                    outputContainer.textContent = 'Error occurred';
+                }
+            } catch (error) {
+                outputContainer.textContent = 'Failed to run code. ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

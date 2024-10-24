@@ -4,51 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drag and Drop Exercise</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f1e0ab;
-            color: #ffffff;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3em;
-            color: #212121;
-            margin-top: 40px;
-        }
         .drag-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             margin: 20px;
+            background: rgba(0, 90, 171, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .sentence-container {
             display: flex;
+            width: 90%;
             justify-content: center;
             margin: 40px auto;
             flex-wrap: wrap;
-            background-color: #5c5c5c;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 15px;
             max-width: 800px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .word-slot {
             width: 150px;
             height: 50px;
-            border-bottom: 2px solid #005aab;
             margin: 0 10px;
             text-align: center;
+            background: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         .draggable {
             padding: 10px;
             background-color: #005aab;
-            color: white;
+            color: rgb(255, 255, 255);
             cursor: grab;
             border-radius: 5px;
             margin: 5px;
             transition: transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         .draggable:hover {
             transform: scale(1.1);
@@ -56,86 +53,46 @@
         .dropzone {
             width: 150px;
             height: 50px;
-            border-bottom: 2px solid #005aab;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 10px;
             transition: background-color 0.3s ease;
+            border-radius: 5px;
+            background: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         .dropzone.hovered {
             background-color: #e0e0e0;
         }
         .correct {
-            background-color: green;
+            background-color: #4caf50;
             color: white;
         }
         .incorrect {
-            background-color: red;
+            background-color: #f44336;
             color: white;
-        }
-        button {
-            padding: 15px 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border: none;
-            border-radius: 25px;
-            background-color: #ffb74d;
-            color: #212121;
-            transition: background-color 0.3s ease;
-            margin: 20px;
-        }
-        button:hover {
-            background-color: #ffa726;
-        }
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
-            }
-            .sentence-container {
-                padding: 15px;
-            }
-            .word-slot {
-                width: 120px;
-                height: 40px;
-            }
-            .draggable {
-                padding: 8px;
-                font-size: 0.9em;
-            }
-            button {
-                padding: 12px 25px;
-                font-size: 1em;
-            }
-        }
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2em;
-            }
-            .sentence-container {
-                padding: 10px;
-            }
-            .word-slot {
-                width: 100px;
-                height: 35px;
-            }
-            .draggable {
-                padding: 6px;
-                font-size: 0.8em;
-            }
-            button {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
         }
     </style>
 </head>
 <body>
-    <h1>Drag and Drop Exercise</h1>
+    <header>
+        <div class="header-left">
+            <h2 style="display: inline-block; margin: 0;">PyLearn</h2>
+        </div>
+        <nav class="header-right">
+            <a href="../index.html">Home</a>
+            <a href="../materi/">Materi</a>
+            <a href="latihan.html">Latihan</a>
+        </nav>
+    </header>
 
     <!-- Sentence to Complete -->
+        
+
     <div class="sentence-container">
+        <a style="color: rgb(0, 0, 0); font-size: 20px; display: block; width: 100%; text-align: center; margin-bottom: 10px;">Output: hello world</a>
         <div class="word-slot dropzone" id="dropzone1"></div>
         <div class="word-slot dropzone" id="dropzone2"></div>
     </div>
@@ -208,11 +165,6 @@
                 }
             });
 
-            if (allFilled && isCorrect) {
-                alert('All answers are correct!');
-            } else if (allFilled && !isCorrect) {
-                alert('Some answers are incorrect. Please try again.');
-            }
         }
 
         document.getElementById('resetButton').addEventListener('click', () => {
