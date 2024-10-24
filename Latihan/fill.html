@@ -14,7 +14,7 @@
             width: 80%;
             margin: 40px auto;
             background-color: #ffffff;
-            padding: 30px;
+            padding: 10px;
             border-radius: 15px;
         }
         .question {
@@ -71,17 +71,17 @@
             const answer = document.getElementById('answer1').value.trim();
             const questionContainer = document.getElementById('question1');
             if (answer.toLowerCase() === 'print') {
-                questionContainer.style.backgroundColor = '#4caf50';
+                questionContainer.style.backgroundColor = '#98eb9b';
                 feedback.style.display = 'block';
                 feedback.textContent = 'Jawaban Benar!';
                 feedback.style.color = 'white';
             } else if (answer === '') {
-                questionContainer.style.backgroundColor = '#f44336';
+                questionContainer.style.backgroundColor = '#e4938e';
                 feedback.style.display = 'block';
                 feedback.textContent = 'Jawaban Masih Kosong!';
                 feedback.style.color = 'white';
             } else {
-                questionContainer.style.backgroundColor = '#f44336';
+                questionContainer.style.backgroundColor = '#e4938e';
                 feedback.style.display = 'block';
                 feedback.textContent = 'Jawaban Salah!';
                 feedback.style.color = 'white';
