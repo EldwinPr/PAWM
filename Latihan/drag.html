@@ -89,8 +89,6 @@
     </header>
 
     <!-- Sentence to Complete -->
-        
-
     <div class="sentence-container">
         <a style="color: rgb(0, 0, 0); font-size: 20px; display: block; width: 100%; text-align: center; margin-bottom: 10px;">Output: hello world</a>
         <div class="word-slot dropzone" id="dropzone1"></div>
@@ -120,6 +118,17 @@
                 draggable.classList.remove('dragging');
                 checkAnswers();
             });
+
+            // Add touch events for mobile compatibility
+            draggable.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                draggable.classList.add('dragging');
+            });
+
+            draggable.addEventListener('touchend', () => {
+                draggable.classList.remove('dragging');
+                checkAnswers();
+            });
         });
 
         dropzones.forEach(dropzone => {
@@ -133,6 +142,23 @@
             });
 
             dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const draggable = document.querySelector('.dragging');
+                if (draggable) {
+                    dropzone.classList.remove('hovered');
+                    if (!dropzone.querySelector('.draggable')) {
+                        dropzone.appendChild(draggable);
+                    }
+                }
+            });
+
+            // Add touch events for mobile compatibility
+            dropzone.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('hovered');
+            });
+
+            dropzone.addEventListener('touchend', (e) => {
                 e.preventDefault();
                 const draggable = document.querySelector('.dragging');
                 if (draggable) {
@@ -164,7 +190,6 @@
                     isCorrect = false;
                 }
             });
-
         }
 
         document.getElementById('resetButton').addEventListener('click', () => {
