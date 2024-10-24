@@ -3,231 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pylearn - Belajar Python</title>
+    <title>Pylearn - Belajar Python Interaktif</title>
+    <meta name="description" content="Belajar Python dengan cara yang interaktif dan menyenangkan di Pylearn. Materi dan latihan tersedia untuk semua tingkat kemampuan.">
     <style>
-        /* Global Styles */
-        body {
+        :root {
+            --primary-color: #3670a1;
+            --secondary-color: #ffc107;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
 
         .gradient-section {
-            background: linear-gradient(135deg, #1e1e1e, #f39c12);
+            background: linear-gradient(135deg, #1e1e1e, var(--primary-color));
             color: #ffffff;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
+            padding: 2rem;
+            text-align: center;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            text-align: center;
+            padding: 0 1rem;
         }
 
-        /* Header Section */
         .header {
-            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
-        }
-
-        .header-text {
-            color: white;
+            gap: 2rem;
         }
 
         .header-text h1 {
-            font-size: 80px;
-            margin: 0;
-            color: #ffc107;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease-out;
         }
 
         .header-text p {
-            font-size: 28px;
-            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
         }
 
         .title-image {
             width: 150px;
-            display: block;
-            margin: 0 auto;
+            animation: rotate 10s linear infinite;
         }
 
         .start-btn {
-            background-color: #ffb74d;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
             border: none;
-            padding: 15px 30px;
+            padding: 1rem 2rem;
             border-radius: 50px;
-            font-size: 24px;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
         }
 
         .start-btn:hover {
-            background-color: #ffa726;
+            background-color: #ffa000;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .icons {
-            width: 150px;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* Section for Materi & Latihan */
         .yellow-section {
-            background-color: #ffc107;
-            padding: 50px 20px;
+            background-color: var(--secondary-color);
+            padding: 4rem 0;
         }
 
         .content {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin-top: 20px;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
         .card {
-            width: 100%;
-            max-width: 300px;
-            height: 350px;
-            background-color: #212121;
+            background-color: #ffffff;
             border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            transition: transform 0.3s ease;
-            margin-bottom: 20px;
-            padding: 20px;
-            box-sizing: border-box;
+            padding: 2rem;
+            width: 300px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .card:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .card img {
             width: 100px;
-            margin-bottom: 20px;
-            display: block;
-            margin: 0 auto;
+            margin-bottom: 1rem;
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
         }
 
         .footer {
-            background-color: #0d47a1;
-            padding: 20px;
-            color: white;
+            background-color: var(--primary-color);
+            color: #ffffff;
             text-align: center;
+            padding: 1rem 0;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
         @media (max-width: 768px) {
             .header-text h1 {
-                font-size: 50px;
+                font-size: 3rem;
             }
 
             .header-text p {
-                font-size: 20px;
+                font-size: 1.2rem;
             }
 
             .start-btn {
-                font-size: 20px;
-                padding: 10px 20px;
+                font-size: 1rem;
+                padding: 0.8rem 1.6rem;
             }
 
             .card {
-                max-width: 250px;
-                height: 300px;
-            }
-
-            .card img {
-                width: 80px;
+                width: 100%;
+                max-width: 300px;
             }
         }
 
         @media (max-width: 480px) {
             .header-text h1 {
-                font-size: 36px;
+                font-size: 2.5rem;
             }
 
             .header-text p {
-                font-size: 16px;
+                font-size: 1rem;
             }
 
-            .start-btn {
-                font-size: 16px;
-                padding: 8px 16px;
-            }
-
-            .icons {
-                width: 80px;
-            }
-
-            .card {
-                max-width: 200px;
-                height: 250px;
-            }
-
-            .card img {
-                width: 60px;
+            .title-image {
+                width: 100px;
             }
         }
     </style>
+</head>
+<body>
+    <header class="gradient-section">
+        <div class="container">
+            <div class="header">
+                <img class="title-image" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+                <div class="header-text">
+                    <h1><span style="color: var(--secondary-color);">Py</span>learn</h1>
+                    <p>Belajar Python dengan cara yang interaktif dan menyenangkan</p>
+                    <button class="start-btn" id="startBtn">Mulai Belajar</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="yellow-section">
+        <div class="container">
+            <div class="content">
+                <article class="card" onclick="window.location.href='materi/materi.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Materi Icon">
+                    <h2>Materi</h2>
+                    <p>Pelajari dasar-dasar Python hingga konsep lanjutan dengan materi yang terstruktur.</p>
+                </article>
+                <article class="card" onclick="window.location.href='Latihan/latihan.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="Latihan Icon">
+                    <h2>Latihan</h2>
+                    <p>Uji pemahaman Anda dengan latihan interaktif dan proyek-proyek menarik.</p>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Pylearn | Belajar Python dengan mudah dan menyenangkan</p>
+    </footer>
+
     <script>
-        function scrollToContent() {
+        document.getElementById('startBtn').addEventListener('click', function() {
             document.querySelector('.yellow-section').scrollIntoView({
                 behavior: 'smooth'
             });
-        }
+        });
+
+        // Intersection Observer for fade-in effect
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            observer.observe(card);
+        });
     </script>
-</head>
-<body>
-    <!-- Gradient Section for Header -->
-    <div class="gradient-section">
-        <div class="container">
-            <!-- Header Section -->
-            <div class="header">
-                <div class="icons">
-                    <img class="title-image" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Icon">
-                </div>
-                <div class="header-text">
-                    <h1><span style="color: #3670a1;">Py</span>learn</h1>
-                    <p>Belajar Python dengan interaktif</p>
-                    <button class="start-btn" onclick="scrollToContent()">Mulai Belajar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Yellow Section for Materi & Latihan -->
-    <div class="yellow-section">
-        <div class="container">
-            <!-- Content Section -->
-            <div class="content">
-                <div class="card" onclick="window.location.href='materi/materi.html'">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Materi">
-                    <h2>Materi</h2>
-                </div>
-                <div class="card" onclick="window.location.href='Latihan/latihan.html'">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="Latihan">
-                    <h2>Latihan</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Section -->
-    <div class="footer">
-        <p>&copy; 2024 Pylearn | Belajar Python dengan mudah</p>
-    </div>
 </body>
 </html>

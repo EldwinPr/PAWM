@@ -14,7 +14,7 @@
             width: 80%;
             margin: 40px auto;
             background-color: #ffffff;
-            padding: 10px;
+            padding: 30px;
             border-radius: 15px;
         }
         .question {
@@ -49,7 +49,7 @@
         </div>
         <nav class="header-right">
             <a href="../index.html">Home</a>
-            <a href="../materi/materi.html">Materi</a>
+            <a href="../materi/">Materi</a>
             <a href="latihan.html">Latihan</a>
         </nav>
     </header>
@@ -71,17 +71,17 @@
             const answer = document.getElementById('answer1').value.trim();
             const questionContainer = document.getElementById('question1');
             if (answer.toLowerCase() === 'print') {
-                questionContainer.style.backgroundColor = '#98eb9b';
+                questionContainer.style.backgroundColor = '#4caf50';
                 feedback.style.display = 'block';
                 feedback.textContent = 'Jawaban Benar!';
                 feedback.style.color = 'white';
             } else if (answer === '') {
-                questionContainer.style.backgroundColor = '#e4938e';
+                questionContainer.style.backgroundColor = '#f44336';
                 feedback.style.display = 'block';
                 feedback.textContent = 'Jawaban Masih Kosong!';
                 feedback.style.color = 'white';
             } else {
-                questionContainer.style.backgroundColor = '#e4938e';
+                questionContainer.style.backgroundColor = '#f44336';
                 feedback.style.display = 'block';
                 feedback.textContent = 'Jawaban Salah!';
                 feedback.style.color = 'white';
