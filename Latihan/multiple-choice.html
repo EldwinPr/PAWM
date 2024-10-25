@@ -221,57 +221,56 @@
     <script src="../navbar/navbar.js"></script>
     <script>
         const quizData = [
-            {
-                question: "What is the correct way to declare a variable in Python?",
-                options: ["var x = 5", "let x = 5", "x = 5", "int x = 5"],
-                correctAnswer: 2
-            },
-            {
-                question: "Which of the following is used to comment a single line in Python?",
-                options: ["//", "/* */", "#", "--"],
-                correctAnswer: 2
-            },
-            {
-                question: "What is the output of print(2 ** 3)?",
-                options: ["6", "8", "5", "Error"],
-                correctAnswer: 1
-            },
-            {
-                question: "Which of the following is NOT a valid data type in Python?",
-                options: ["int", "float", "boolean", "char"],
-                correctAnswer: 3
-            },
-            {
-                question: "What is the correct way to create a function in Python?",
-                options: ["function myFunc():", "def myFunc():", "create myFunc():", "func myFunc():"],
-                correctAnswer: 1
-            },
-            {
-                question: "Which of the following is used to handle exceptions in Python?",
-                options: ["if-else", "for-in", "try-except", "switch-case"],
-                correctAnswer: 2
-            },
-            {
-                question: "What is the output of print(len('Python'))?",
-                options: ["5", "6", "7", "Error"],
-                correctAnswer: 1
-            },
-            {
-                question: "Which method is used to add an element to the end of a list in Python?",
-                options: ["append()", "add()", "insert()", "extend()"],
-                correctAnswer: 0
-            },
-            {
-                question: "What is the correct way to import a module named 'math' in Python?",
-                options: ["import math", "include math", "using math", "#include <math>"],
-                correctAnswer: 0
-            },
-            {
-                question: "Which of the following is used to define a class in Python?",
-                options: ["def", "class", "struct", "object"],
-                correctAnswer: 1
-            }
-        ];
+        {
+            "question": "Apa cara yang benar untuk mendeklarasikan variabel di Python?",
+            "options": ["var x = 5", "let x = 5", "x = 5", "int x = 5"],
+            "correctAnswer": 2
+        },
+        {
+            "question": "Manakah dari berikut ini yang digunakan untuk memberikan komentar satu baris di Python?",
+            "options": ["//", "/* */", "#", "--"],
+            "correctAnswer": 2
+        },
+        {
+            "question": "Apa output dari print(2 ** 3)?",
+            "options": ["6", "8", "5", "Error"],
+            "correctAnswer": 1
+        },
+        {
+            "question": "Manakah dari berikut ini yang BUKAN tipe data yang valid di Python?",
+            "options": ["int", "float", "boolean", "char"],
+            "correctAnswer": 3
+        },
+        {
+            "question": "Apa cara yang benar untuk membuat fungsi di Python?",
+            "options": ["function myFunc():", "def myFunc():", "create myFunc():", "func myFunc():"],
+            "correctAnswer": 1
+        },
+        {
+            "question": "Manakah dari berikut ini yang digunakan untuk menangani pengecualian di Python?",
+            "options": ["if-else", "for-in", "try-except", "switch-case"],
+            "correctAnswer": 2
+        },
+        {
+            "question": "Apa output dari print(len('Python'))?",
+            "options": ["5", "6", "7", "Error"],
+            "correctAnswer": 1
+        },
+        {
+            "question": "Metode mana yang digunakan untuk menambahkan elemen ke akhir list di Python?",
+            "options": ["append()", "add()", "insert()", "extend()"],
+            "correctAnswer": 0
+        },
+        {
+            "question": "Apa cara yang benar untuk mengimpor modul bernama 'math' di Python?",
+            "options": ["import math", "include math", "using math", "#include <math>"],
+            "correctAnswer": 0
+        },
+        {
+            "question": "Manakah dari berikut ini yang digunakan untuk mendefinisikan kelas di Python?",
+            "options": ["def", "class", "struct", "object"],
+            "correctAnswer": 1
+        }];
 
         function renderQuiz() {
             const quizContainer = document.getElementById('quiz-container');
