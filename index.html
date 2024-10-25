@@ -35,6 +35,7 @@
             justify-content: center;
             padding: 2rem;
             text-align: center;
+            position: relative;
         }
 
         .container {
@@ -67,7 +68,7 @@
             animation: rotate 10s linear infinite;
         }
 
-        .start-btn {
+        .start-btn, .login-btn {
             background-color: var(--secondary-color);
             color: var(--text-color);
             border: none;
@@ -79,10 +80,18 @@
             animation: pulse 2s infinite;
         }
 
-        .start-btn:hover {
+        .start-btn:hover, .login-btn:hover {
             background-color: #ffa000;
             transform: translateY(-3px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .login-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
         }
 
         .yellow-section {
@@ -181,7 +190,7 @@
                 font-size: 1.2rem;
             }
 
-            .start-btn {
+            .start-btn, .login-btn {
                 font-size: 1rem;
                 padding: 0.8rem 1.6rem;
             }
@@ -209,6 +218,7 @@
 </head>
 <body>
     <header class="gradient-section">
+        <button class="login-btn" id="loginBtn" onclick="window.location.href='account page/login.html'">Login</button>
         <div class="container">
             <div class="header">
                 <img class="title-image" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
@@ -234,6 +244,11 @@
                     <h2>Latihan</h2>
                     <p>Uji pemahaman Anda dengan latihan interaktif dan proyek-proyek menarik.</p>
                 </article>
+                <article class="card" onclick="window.location.href='online-comp.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Compiler Icon">
+                    <h2>Online Compiler</h2>
+                    <p>Tulis dan jalankan kode Python Anda secara langsung di browser.</p>
+                </article>
             </div>
         </div>
     </main>
@@ -247,6 +262,10 @@
             document.querySelector('.yellow-section').scrollIntoView({
                 behavior: 'smooth'
             });
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            alert('Login functionality will be implemented here.');
         });
 
         // Intersection Observer for fade-in effect

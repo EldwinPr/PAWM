@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PyLearn - Exercise Selection</title>
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="../navbar/navbar.css">
     <style>
         :root {
             --primary-color: #3670a1;
@@ -24,31 +26,6 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-left h1 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
-
-        .header-right a {
-            color: var(--white);
-            text-decoration: none;
-            margin-left: 1rem;
-            transition: color 0.3s ease;
-        }
-
-        .header-right a:hover {
-            color: var(--secondary-color);
         }
 
         main {
@@ -117,39 +94,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <h1>PyLearn</h1>
-        </div>
-        <nav class="header-right">
-            <a href="../index.html">Home</a>
-            <a href="../materi/materi.html">Materi</a>
-            <a href="latihan.html">Latihan</a>
-        </nav>
-    </header>
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+            <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../materi/materi.html">Materi</a></li>
+            <li><a href="../Latihan/latihan.html">Latihan</a></li>
+            <li><a href="../online-comp.html">Online Compiler</a></li>
+            <li><a href="../account page/Account.html">Akun</a></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
     
     <main>
         <div class="content-section">
-            <h2>Choose Your Exercise</h2>
-            <p>Select an exercise type to start practicing Python:</p>
+            <h2>Pilih Jenis Latihan</h2>
+            <p>Silakan pilih jenis latihan yang ingin kamu kerjakan.</p><br>
             <div class="exercise-grid">
-                <button class="exercise-button" onclick="navigateTo('fill.html')">
+                <button class="exercise-button" onclick="window.location.href='fill.html'">
                     <i class="fas fa-pencil-alt"></i>
                     Fill in The Blanks
                 </button>
-                <button class="exercise-button" onclick="navigateTo('drag.html')">
+                <button class="exercise-button" onclick="window.location.href='drag.html'">
                     <i class="fas fa-arrows-alt"></i>
                     Drag and Drop
                 </button>
-                <button class="exercise-button" onclick="navigateTo('online-comp.html')">
-                    <i class="fas fa-code"></i>
-                    Online Compiler
+                <button class="exercise-button" onclick="navigateTo('#')">
+                    <i class="fa fa-hand-pointer"></i>
+                    Multiple Choice
                 </button>
             </div>
         </div>
     </main>
 
-    <script>
+    <script src="../navbar/navbar.js">
         function navigateTo(page) {
             const button = event.currentTarget;
             button.style.transform = 'scale(0.95)';
