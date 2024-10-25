@@ -3,54 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop Exercise</title>
-    <link rel="stylesheet" href="style.css">
+    <title>PyLearn - Drag and Drop Exercise</title>
+    <link rel="stylesheet" href="../navbar/navbar.css">
     <style>
+        :root {
+            --primary-color: #3670a1;
+            --secondary-color: #ffc107;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+            --white: #ffffff;
+            --correct-color: #4caf50;
+            --incorrect-color: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
         .drag-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            margin: 20px;
-            background: rgba(0, 90, 171, 0.1);
+            margin: 20px 0;
+            background: rgba(54, 112, 161, 0.1);
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
+
         .sentence-container {
             display: flex;
-            width: 90%;
+            width: 100%;
             justify-content: center;
-            margin: 40px auto;
+            margin: 20px 0;
             flex-wrap: wrap;
-            background-color: #ffffff;
+            background-color: var(--white);
             padding: 20px;
-            border-radius: 15px;
-            max-width: 800px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
+
         .word-slot {
             width: 150px;
             height: 50px;
             margin: 0 10px;
             text-align: center;
-            background: #f9f9f9;
+            background: var(--bg-color);
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .draggable {
             padding: 10px;
-            background-color: #005aab;
-            color: rgb(255, 255, 255);
+            background-color: var(--primary-color);
+            color: var(--white);
             cursor: grab;
             border-radius: 5px;
             margin: 5px;
             transition: transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             touch-action: none;
         }
+
         .draggable:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
+
         .dropzone {
             width: 175px;
             height: 50px;
@@ -61,50 +110,105 @@
             margin: 10px;
             transition: background-color 0.3s ease;
             border-radius: 5px;
-            background: #f9f9f9;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            background: var(--bg-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .dropzone.hovered {
-            background-color: #e0e0e0;
+            background-color: var(--secondary-color);
         }
+
         .correct {
-            background-color: #98eb9b;
-            color: white;
+            background-color: var(--correct-color);
+            color: var(--white);
         }
+
         .incorrect {
-            background-color: #e4938e;
-            color: white;
+            background-color: var(--incorrect-color);
+            color: var(--white);
+        }
+
+        .quiz-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .quiz-button:hover, .quiz-button:focus {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .content-section {
+                padding: 1rem;
+            }
+
+            .quiz-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <h2 style="display: inline-block; margin: 0;">PyLearn</h2>
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="window.location.href='../index.html'">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+            <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="../materi/materi.html">Materi</a></li>
+            <li><a href="../Latihan/latihan.html">Latihan</a></li>
+            <li><a href="../online-comp.html">Online Compiler</a></li>
+            <li><a href="../account page/Account.html">Akun</a></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <main>
+        <div class="content-section">
+            <h2>Drag and Drop Exercise</h2>
+            <p>Arrange the code snippets to create a valid Python print statement:</p>
+
+            <!-- Sentence to Complete -->
+            <div class="sentence-container">
+                <p style="width: 100%; text-align: center; margin-bottom: 10px; font-size: 1.1rem;">
+                    Output: Hello World
+                </p>
+                <div class="word-slot dropzone" id="dropzone1"></div>
+                <div class="word-slot dropzone" id="dropzone2"></div>
+            </div>
+
+            <!-- Draggable Words -->
+            <div class="drag-container" id="answer-container">
+                <div id="draggable1" class="draggable" draggable="true">print</div>
+                <div id="draggable2" class="draggable" draggable="true">("Hello World")</div>
+                <div id="draggable3" class="draggable" draggable="true">System.out.println</div>
+            </div>
+
+            <button id="resetButton" class="quiz-button">Reset</button>
         </div>
-        <nav class="header-right">
-            <a href="../index.html">Home</a>
-            <a href="../materi/materi.html">Materi</a>
-            <a href="latihan.html">Latihan</a>
-        </nav>
-    </header>
+    </main>
 
-    <!-- Sentence to Complete -->
-    <div class="sentence-container">
-        <a style="color: rgb(0, 0, 0); font-size: 20px; display: block; width: 100%; text-align: center; margin-bottom: 10px;">Output: hello world</a>
-        <div class="word-slot dropzone" id="dropzone1"></div>
-        <div class="word-slot dropzone" id="dropzone2"></div>
-    </div>
+    <footer>
+        <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>
+    </footer>
 
-    <!-- Draggable Words -->
-    <div class="drag-container" id="answer-container">
-        <div id="draggable1" class="draggable" draggable="true">Print</div>
-        <div id="draggable2" class="draggable" draggable="true">("Hello World")</div>
-        <div id="draggable3" class="draggable" draggable="true">System.out.Println</div>
-    </div>
-
-    <button id="resetButton">Reset</button>
-
+    <script src="../navbar/navbar.js"></script>
     <script>
         const draggables = document.querySelectorAll('.draggable');
         const dropzones = document.querySelectorAll('.dropzone');
@@ -187,7 +291,7 @@
         });
 
         function checkAnswers() {
-            const correctAnswers = ['Print', '("Hello World")'];
+            const correctAnswers = ['print', '("Hello World")'];
             let allFilled = true;
             let isCorrect = true;
 

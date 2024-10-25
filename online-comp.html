@@ -64,7 +64,7 @@
             font-family: 'Courier New', monospace;
         }
 
-        button {
+        .runbutton {
             background-color: var(--primary-color);
             color: var(--white);
             border: none;
@@ -75,7 +75,7 @@
             transition: all 0.3s ease;
         }
 
-        button:hover {
+        button:hover .runbutton {
             background-color: var(--secondary-color);
             color: var(--text-color);
             transform: translateY(-3px);
@@ -139,7 +139,7 @@
             <h2>Write Your Python Code Below</h2>
             <textarea id="codeInput" placeholder="Write your Python code here...">print("Hello, World!")</textarea>
             <div>
-                <button onclick="runCode()">Run Code</button>
+                <button onclick="runCode()" id="run-button">Run Code</button>
             </div>
         </div>
         <div class="output-container">

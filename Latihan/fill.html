@@ -3,90 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syntax Test Page</title>
-    <link rel="stylesheet" href="style.css">
+    <title>PyLearn - Fill in the Blanks</title>
+    <link rel="stylesheet" href="../navbar/navbar.css">
     <style>
+        :root {
+            --primary-color: #3670a1;
+            --secondary-color: #ffc107;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+            --white: #ffffff;
+            --correct-color: #4caf50;
+            --incorrect-color: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f1e0ab;
-            text-align: center;
-        }
-        .question-container {
-            width: 80%;
-            margin: 40px auto;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-        }
-        .question {
-            margin-bottom: 20px;
-            font-size: 1.2em;
-            color: rgb(0, 0, 0);
-        }
-        .answer {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
+            flex-direction: column;
         }
-        .answer input {
-            margin-right: 10px;
-            padding: 10px;
-            font-size: 1em;
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .fill-blank {
+            display: inline-block;
+            padding: 5px;
+            margin: 0 5px;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .quiz-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
             border-radius: 5px;
-            border: 2px solid #005aab;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
         }
-        #feedback {
-            font-size: 1.2em;
-            margin-top: 20px;
+
+        .quiz-button:hover, .quiz-button:focus {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        #result {
+            margin-top: 1rem;
             font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .correct {
+            color: var(--correct-color);
+        }
+
+        .incorrect {
+            color: var(--incorrect-color);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .content-section {
+                padding: 1rem;
+            }
+
+            .quiz-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-left">
-            <h2 style="display: inline-block; margin: 0;">PyLearn</h2>
-        </div>
-        <nav class="header-right">
-            <a href="../index.html">Home</a>
-            <a href="../materi/">Materi</a>
-            <a href="latihan.html">Latihan</a>
-        </nav>
-    </header>
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="window.location.href='../index.html'">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+            <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="../materi/materi.html">Materi</a></li>
+            <li><a href="../Latihan/latihan.html">Latihan</a></li>
+            <li><a href="../online-comp.html">Online Compiler</a></li>
+            <li><a href="../account page/Account.html">Akun</a></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
 
-    <div class="question-container">
-        <div class="question" id="question1">
-            <p>Syntax digunakan untuk mencetak:</p>
-            <div class="answer">
-                <input type="text" id="answer1" maxlength="5" size="5">
-                <p>("hello world")</p>
+    <main>
+        <div class="content-section">
+            <h2>Fill in the Blanks - Python Syntax</h2>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
             </div>
-            <p id="feedback" style="display: none;"></p>
-            <button>Submit</button>
+            <div id="quiz-container">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+            <button onclick="checkAnswer()" id="submit-btn" class="quiz-button">Submit Answer</button>
+            <div id="result"></div>
         </div>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>
+    </footer>
+
+    <script src="../navbar/navbar.js"></script>
     <script>
-        document.querySelector('button').addEventListener('click', function() {
-            const feedback = document.getElementById('feedback');
-            const answer = document.getElementById('answer1').value.trim();
-            const questionContainer = document.getElementById('question1');
-            if (answer.toLowerCase() === 'print') {
-                questionContainer.style.backgroundColor = '#4caf50';
-                feedback.style.display = 'block';
-                feedback.textContent = 'Jawaban Benar!';
-                feedback.style.color = 'white';
-            } else if (answer === '') {
-                questionContainer.style.backgroundColor = '#f44336';
-                feedback.style.display = 'block';
-                feedback.textContent = 'Jawaban Masih Kosong!';
-                feedback.style.color = 'white';
-            } else {
-                questionContainer.style.backgroundColor = '#f44336';
-                feedback.style.display = 'block';
-                feedback.textContent = 'Jawaban Salah!';
-                feedback.style.color = 'white';
+        const questions = [
+            {
+                question: 'To print "Hello World" in Python:',
+                blank: '[blank]("Hello World")',
+                answer: 'print',
+                size: 5
+            },
+            {
+                question: "To declare a variable named 'x' with value 5:",
+                blank: 'x [blank] 5',
+                answer: '=',
+                size: 1
+            },
+            {
+                question: "To create a function named 'greet':",
+                blank: '[blank] greet():',
+                answer: 'def',
+                size: 3
+            },
+            {
+                question: "To import the 'random' module:",
+                blank: '[blank] random',
+                answer: 'import',
+                size: 6
+            },
+            {
+                question: "To create a list named 'fruits' with items 'apple' and 'banana':",
+                blank: 'fruits = [blank]',
+                answer: '["apple", "banana"]',
+                size: 20
             }
-        });
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function renderQuestion() {
+            const quizContainer = document.getElementById('quiz-container');
+            const question = questions[currentQuestion];
+            quizContainer.innerHTML = `
+                <p class="question">
+                    ${question.question} <br>
+                    ${question.blank.replace('[blank]', `<input type="text" class="fill-blank" id="answer" style="width: ${question.size * 10}px;" maxlength="${question.size}">`)}
+                </p>
+            `;
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value.trim();
+            const correctAnswer = questions[currentQuestion].answer;
+            const resultElement = document.getElementById('result');
+
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                score++;
+                resultElement.innerHTML = '<p class="correct">Correct!</p>';
+            } else {
+                resultElement.innerHTML = `<p class="incorrect">Incorrect. The correct answer is "${correctAnswer}".</p>`;
+            }
+
+            document.getElementById('submit-btn').textContent = 'Next Question';
+            document.getElementById('submit-btn').onclick = nextQuestion;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                renderQuestion();
+                document.getElementById('result').innerHTML = '';
+                document.getElementById('submit-btn').textContent = 'Submit Answer';
+                document.getElementById('submit-btn').onclick = checkAnswer;
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            const quizContainer = document.getElementById('quiz-container');
+            const submitBtn = document.getElementById('submit-btn');
+            quizContainer.innerHTML = `
+                <h3>Quiz Complete!</h3>
+                <p>You scored ${score} out of ${questions.length}.</p>
+            `;
+            submitBtn.textContent = 'Restart Quiz';
+            submitBtn.onclick = restartQuiz;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            renderQuestion();
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('submit-btn').textContent = 'Submit Answer';
+            document.getElementById('submit-btn').onclick = checkAnswer;
+        }
+
+        renderQuestion();
     </script>
 </body>
 </html>
