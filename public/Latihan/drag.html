@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyLearn - Drag and Drop Exercise</title>
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <style>
+        :root {
+            --primary-color: #3670a1;
+            --secondary-color: #ffc107;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+            --white: #ffffff;
+            --correct-color: #4caf50;
+            --incorrect-color: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .drag-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+            background: rgba(54, 112, 161, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .sentence-container {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            background-color: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .word-slot {
+            width: 150px;
+            height: 50px;
+            margin: 0 10px;
+            text-align: center;
+            background: var(--bg-color);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .draggable {
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            cursor: grab;
+            border-radius: 5px;
+            margin: 5px;
+            transition: transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            touch-action: none;
+        }
+
+        .draggable:hover {
+            transform: scale(1.05);
+        }
+
+        .dropzone {
+            width: 175px;
+            height: 50px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+            border-radius: 5px;
+            background: var(--bg-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropzone.hovered {
+            background-color: var(--secondary-color);
+        }
+
+        .correct {
+            background-color: var(--correct-color);
+            color: var(--white);
+        }
+
+        .incorrect {
+            background-color: var(--incorrect-color);
+            color: var(--white);
+        }
+
+        .quiz-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .quiz-button:hover, .quiz-button:focus {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .content-section {
+                padding: 1rem;
+            }
+
+            .quiz-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo"  onclick="window.location.href='../index.html'">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+            <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="../materi/materi.html">Materi</a></li>
+            <li><a href="../Latihan/latihan.html">Latihan</a></li>
+            <li><a href="../online-comp.html">Online Compiler</a></li>
+            <li><a href="../account/Account.html">Akun</a></li>
+            <li><button id="log-out" class="logout-btn">Log Out</button></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+
+    <main>
+        <div class="content-section">
+            <h2>Drag and Drop Exercise</h2>
+            <p>Arrange the code snippets to create a valid Python print statement:</p>
+
+            <!-- Sentence to Complete -->
+            <div class="sentence-container">
+                <p style="width: 100%; text-align: center; margin-bottom: 10px; font-size: 1.1rem;">
+                    Output: Hello World
+                </p>
+                <div class="word-slot dropzone" id="dropzone1"></div>
+                <div class="word-slot dropzone" id="dropzone2"></div>
+            </div>
+
+            <!-- Draggable Words -->
+            <div class="drag-container" id="answer-container">
+                <div id="draggable1" class="draggable" draggable="true">print</div>
+                <div id="draggable2" class="draggable" draggable="true">("Hello World")</div>
+                <div id="draggable3" class="draggable" draggable="true">System.out.println</div>
+            </div>
+
+            <button id="resetButton" class="quiz-button">Reset</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>
+    </footer>
+
+    <script src="../navbar/navbar.js"></script>
+    <script>
+        const draggables = document.querySelectorAll('.draggable');
+        const dropzones = document.querySelectorAll('.dropzone');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', () => {
+                draggable.classList.add('dragging');
+            });
+
+            draggable.addEventListener('dragend', () => {
+                draggable.classList.remove('dragging');
+                checkAnswers();
+            });
+
+            // Add touch events for mobile compatibility
+            draggable.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                draggable.style.position = 'absolute';
+                draggable.style.zIndex = 1000;
+                document.body.appendChild(draggable);
+
+                moveAt(touch.pageX, touch.pageY);
+
+                function moveAt(pageX, pageY) {
+                    draggable.style.left = pageX - draggable.offsetWidth / 2 + 'px';
+                    draggable.style.top = pageY - draggable.offsetHeight / 2 + 'px';
+                }
+
+                function onTouchMove(event) {
+                    const touch = event.touches[0];
+                    moveAt(touch.pageX, touch.pageY);
+                }
+
+                document.addEventListener('touchmove', onTouchMove);
+
+                draggable.addEventListener('touchend', () => {
+                    document.removeEventListener('touchmove', onTouchMove);
+                    draggable.classList.remove('dragging');
+
+                    // Drop logic
+                    dropzones.forEach(dropzone => {
+                        const dropzoneRect = dropzone.getBoundingClientRect();
+                        const draggableRect = draggable.getBoundingClientRect();
+
+                        if (
+                            draggableRect.left >= dropzoneRect.left &&
+                            draggableRect.right <= dropzoneRect.right &&
+                            draggableRect.top >= dropzoneRect.top &&
+                            draggableRect.bottom <= dropzoneRect.bottom
+                        ) {
+                            dropzone.appendChild(draggable);
+                        }
+                    });
+                    checkAnswers();
+                }, { once: true });
+            });
+        });
+
+        dropzones.forEach(dropzone => {
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('hovered');
+            });
+
+            dropzone.addEventListener('dragleave', () => {
+                dropzone.classList.remove('hovered');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const draggable = document.querySelector('.dragging');
+                if (draggable) {
+                    dropzone.classList.remove('hovered');
+                    if (!dropzone.querySelector('.draggable')) {
+                        dropzone.appendChild(draggable);
+                    }
+                }
+            });
+        });
+
+        function checkAnswers() {
+            const correctAnswers = ['print', '("Hello World")'];
+            let allFilled = true;
+            let isCorrect = true;
+
+            dropzones.forEach((dropzone, index) => {
+                const draggable = dropzone.querySelector('.draggable');
+                if (!draggable) {
+                    allFilled = false;
+                    return;
+                }
+                if (draggable.textContent === correctAnswers[index]) {
+                    dropzone.classList.add('correct');
+                    dropzone.classList.remove('incorrect');
+                } else {
+                    dropzone.classList.add('incorrect');
+                    dropzone.classList.remove('correct');
+                    isCorrect = false;
+                }
+            });
+        }
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyLearn - Online Compiler</title>
+    <link rel="stylesheet" href="./navbar/navbar.css">
+    <style>
+        :root {
+            --primary-color: #3670a1;
+            --secondary-color: #ffc107;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            margin-bottom: 1rem;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+        }
+
+        #run-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        #run-button:hover {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .output-container {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            font-family: 'Courier New', monospace;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .content-section, .output-container {
+                padding: 1rem;
+            }
+
+            textarea {
+                height: 200px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo"  onclick="window.location.href='../index.html'">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+            <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="./materi/materi.html">Materi</a></li>
+            <li><a href="./Latihan/latihan.html">Latihan</a></li>
+            <li><a href="./online-comp.html">Online Compiler</a></li>
+            <li><a href="./account/Account.html">Akun</a></li>
+            <li><button id="log-out" class="logout-btn">Log Out</button></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+
+    <main>
+        <div class="content-section">
+            <h2>Tuliskan kode python mu di bawah!</h2>
+            <textarea id="codeInput" placeholder="Write your Python code here...">print("Hello, World!")</textarea>
+            <div>
+                <button onclick="runCode()" id="run-button">Jalankan Kode</button>
+            </div>
+        </div>
+        <div class="output-container">
+            <h3>Output</h3>
+            <pre id="output">Keluaran kode akan muncul di sini...</pre>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>
+    </footer>
+
+    <script src="./navbar/navbar.js"></script>
+    <script>
+        async function runCode() {
+            const code = document.getElementById('codeInput').value;
+            const outputContainer = document.getElementById('output');
+            outputContainer.textContent = 'Running code...';
+
+            const data = {
+                language: "python",
+                version: "3.10.0",
+                files: [
+                    {
+                        content: code
+                    }
+                ]
+            };
+
+            try {
+                const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.run && result.run.output) {
+                    outputContainer.textContent = result.run.output;
+                } else if (result.message) {
+                    outputContainer.textContent = 'Error: ' + result.message;
+                } else {
+                    outputContainer.textContent = 'An unexpected error occurred.';
+                }
+            } catch (error) {
+                outputContainer.textContent = 'Failed to run code. ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
