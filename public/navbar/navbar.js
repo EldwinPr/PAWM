@@ -24,3 +24,25 @@ document.getElementById('log-out').addEventListener('click', function (e) {
     localStorage.removeItem('token');
     window.location.href = '../index.html';
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const akunLink = document.getElementById('akun');
+    const logoutBtn = document.getElementById('log-out');
+
+    const token = localStorage.getItem('token');
+
+    if (token) {
+        akunLink.style.display = 'block';
+        logoutBtn.textContent = 'Log Out';
+        logoutBtn.onclick = function () {
+            localStorage.removeItem('token');
+            window.location.href = '../index.html';
+        };
+    } else {
+        akunLink.style.display = 'none';
+        logoutBtn.textContent = 'Login';
+        logoutBtn.onclick = function () {
+            window.location.href = '../account/login.html';
+        };
+    }
+});

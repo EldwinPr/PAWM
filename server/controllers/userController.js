@@ -63,7 +63,25 @@ const loginUser = (req, res) => {
     });
 };
 
+// Get User Data
+const getUserData = (req, res) => {
+    const userEmail = req.query.email;
+
+    db.get('SELECT username, email FROM users WHERE email = ?', [userEmail], (err, row) => {
+        if (err) {
+            return res.status(500).json({ message: 'Failed to retrieve user data' });
+        }
+
+        if (!row) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json(row);
+    });
+};
+
 module.exports = {
     registerUser,
     loginUser,
+    getUserData,
 };

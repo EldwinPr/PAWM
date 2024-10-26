@@ -218,7 +218,7 @@
 </head>
 <body>
     <header class="gradient-section">
-        <button class="login-btn" id="loginBtn" onclick="window.location.href='account/login.html'">Login</button>
+        <button class="login-btn" id="loginBtn">Login</button>
         <div class="container">
             <div class="header">
                 <img class="title-image" src="https://cdn.iconscout.com/icon/free/png-256/free-python-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-vol-5-pack-logos-icons-2945099.png?f=webp&w=256" alt="Python Logo">
@@ -264,7 +264,6 @@
             });
         });
 
-        // Intersection Observer for fade-in effect
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -280,6 +279,25 @@
             card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
             observer.observe(card);
         });
+
+        // login button
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginBtn = document.getElementById('loginBtn');
+
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                loginBtn.textContent = 'Akun';
+                loginBtn.onclick = function () {
+                    window.location.href = 'account/Account.html';
+                };
+            } else {
+                loginBtn.onclick = function () {
+                    window.location.href = 'account/login.html';
+                };
+            }
+        });
+
     </script>
 </body>
 </html>
