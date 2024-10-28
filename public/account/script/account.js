@@ -63,22 +63,14 @@ document.getElementById('saveChanges').addEventListener('click', async function 
     }
 });
 
-// Simulating pre-filled data
+// Simulating pre-filled data from localStorage
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('username').value = 'JohnDoe';
-    document.getElementById('email').value = 'johndoe@example.com';
-});
+    const email = localStorage.getItem('userEmail');
 
-// Close mobile menu when a link is clicked
-navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-    });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (event) => {
-    if (!event.target.closest('.navbar')) {
-        navLinks.classList.remove('active');
+    if (email) {
+        document.getElementById('email').value = email;
+    } else {
+        console.error('Email not found in localStorage.');
+        document.getElementById('errorMessage').textContent = 'Error: No email found. Please log in again.';
     }
 });

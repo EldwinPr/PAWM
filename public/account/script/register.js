@@ -40,8 +40,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
 
         const data = await response.json();
         if (response.ok) {
-            alert('Registration successful! Welcome, ' + username + '!');
-            window.location.href = 'login.html';  // Redirect to login page
+            window.location.href = './login.html';  // Redirect to login page
         } else {
             errorMessage.textContent = data.message || 'Registration failed.';
         }

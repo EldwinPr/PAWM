@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { registerUser, loginUser, getUserData } = require('./controllers/userController');
+const { registerUser, loginUser, getUserData, updateUserData } = require('./controllers/userController');
 const app = express();
 
 app.use(express.json());
@@ -8,7 +8,8 @@ app.use(cors());
 
 app.post('/register', registerUser);
 app.post('/login', loginUser);
-app.post('/getUserData', getUserData);
+app.get('/getUserData', getUserData); // Changed to GET request
+app.post('/updateAccount', updateUserData);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -63,25 +63,110 @@ const loginUser = (req, res) => {
     });
 };
 
-// Get User Data
-const getUserData = (req, res) => {
+// updates user data
+const updateUserData = (req, res) => {
+    const { username, currentPassword, newPassword } = req.body;
     const userEmail = req.query.email;
 
-    db.get('SELECT username, email FROM users WHERE email = ?', [userEmail], (err, row) => {
+    if (!username || !currentPassword) {
+        return res.status(400).json({ message: 'Username and current password are required' });
+    }
+
+    // Fetch the current user from the database
+    db.get('SELECT * FROM users WHERE email = ?', [userEmail], (err, user) => {
         if (err) {
-            return res.status(500).json({ message: 'Failed to retrieve user data' });
+            return res.status(500).json({ message: 'Error fetching user: ' + err.message });
         }
 
-        if (!row) {
+        if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        res.status(200).json(row);
+        // Compare current password
+        bcrypt.compare(currentPassword, user.password, (err, isMatch) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error comparing passwords: ' + err.message });
+            }
+
+            if (!isMatch) {
+                return res.status(400).json({ message: 'Current password is incorrect' });
+            }
+
+            // If a new password is provided, hash it
+            if (newPassword) {
+                bcrypt.hash(newPassword, 10, (err, hashedNewPassword) => {
+                    if (err) {
+                        return res.status(500).json({ message: 'Error hashing new password: ' + err.message });
+                    }
+
+                    // Update username and password
+                    const sql = `UPDATE users SET username = ?, password = ? WHERE email = ?`;
+                    db.run(sql, [username, hashedNewPassword, userEmail], function (err) {
+                        if (err) {
+                            return res.status(500).json({ message: 'Error updating user: ' + err.message });
+                        }
+
+                        res.status(200).json({ message: 'User updated successfully' });
+                    });
+                });
+            } else {
+                // Update only the username if no new password is provided
+                const sql = `UPDATE users SET username = ? WHERE email = ?`;
+                db.run(sql, [username, userEmail], function (err) {
+                    if (err) {
+                        return res.status(500).json({ message: 'Error updating user: ' + err.message });
+                    }
+
+                    res.status(200).json({ message: 'User updated successfully' });
+                });
+            }
+        });
     });
+};
+
+const findUserByEmail = (email) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM users WHERE email = ?';
+
+        console.log(`Running query to find user with email: ${email}`); // Debugging
+
+        db.get(query, [email], (err, row) => {
+            if (err) {
+                console.error('Error finding user by email:', err.message); // Enhanced error logging
+                reject('Error finding user by email: ' + err.message);
+            } else if (!row) {
+                console.warn('No user found for email:', email); // Log when no user is found
+                reject('User not found');
+            } else {
+                console.log('User found:', row); // Log found user details
+                resolve(row);
+            }
+        });
+    });
+};
+
+// Define the getUserData function
+const getUserData = async (req, res) => {
+    const email = req.query.email;
+
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required' });
+    }
+
+    try {
+        const user = await findUserByEmail(email);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
 };
 
 module.exports = {
     registerUser,
     loginUser,
     getUserData,
+    updateUserData
 };
