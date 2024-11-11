@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PyLearn - Pilih Latihan</title>
     <link rel="stylesheet" href="../navbar/navbar.css">
-    <link rel="stylesheet" href="../navbar/navbar.css">
     <style>
         :root {
             --primary-color: #3670a1;
@@ -26,9 +25,13 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         main {
+            flex: 1;
             padding: 2rem;
         }
 
@@ -44,50 +47,54 @@
         .exercise-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
 
         .exercise-button {
             background-color: var(--primary-color);
             color: var(--white);
             border: none;
-            padding: 1rem;
+            padding: 1.5rem;
             font-size: 1rem;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 10px;
             transition: all 0.3s ease;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            height: 150px;
         }
 
         .exercise-button:hover {
             background-color: var(--secondary-color);
             color: var(--text-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .exercise-button i {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
         }
 
         @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                text-align: center;
+            .exercise-grid {
+                grid-template-columns: 1fr;
             }
 
-            .header-right {
-                margin-top: 1rem;
-            }
-
-            .header-right a {
-                display: inline-block;
-                margin: 0.5rem;
+            .exercise-button {
+                height: 120px;
             }
         }
     </style>
@@ -112,30 +119,34 @@
     <main>
         <div class="content-section">
             <h2>Pilih Jenis Latihan</h2>
-            <p>Silakan pilih jenis latihan yang ingin kamu kerjakan.</p><br>
+            <p>Silakan pilih jenis latihan yang ingin kamu kerjakan.</p>
             <div class="exercise-grid">
-                <button class="exercise-button" onclick="window.location.href='fill.html'">
+                <button class="exercise-button" onclick="navigateTo('fill.html')">
                     <i class="fas fa-pencil-alt"></i>
                     Fill in The Blanks
                 </button>
-                <button class="exercise-button" onclick="window.location.href='drag.html'">
+                <button class="exercise-button" onclick="navigateTo('drag.html')">
                     <i class="fas fa-arrows-alt"></i>
                     Drag and Drop
                 </button>
-                <button class="exercise-button" onclick="window.location.href='multiple-choice.html'">
-                    <i class="fa fa-hand-pointer"></i>
+                <button class="exercise-button" onclick="navigateTo('multiple-choice.html')">
+                    <i class="fas fa-list-ul"></i>
                     Multiple Choice
+                </button>
+                <button class="exercise-button" onclick="navigateTo('score.html')">
+                    <i class="fas fa-star"></i>
+                    Skor
                 </button>
             </div>
         </div>
-
     </main>
 
     <footer>
         <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>
     </footer>
 
-    <script src="../navbar/navbar.js">
+    <script src="../navbar/navbar.js"></script>
+    <script>
         function navigateTo(page) {
             const button = event.currentTarget;
             button.style.transform = 'scale(0.95)';

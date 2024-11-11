@@ -7,6 +7,14 @@ document.getElementById('saveChanges').addEventListener('click', async function 
     const confirmPassword = document.getElementById('confirmPassword').value;
     const errorMessage = document.getElementById('errorMessage');
     const successMessage = document.getElementById('successMessage');
+    
+    // Get email from localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    
+    if (!userEmail) {
+        errorMessage.textContent = 'Error: No email found. Please log in again.';
+        return;
+    }
 
     // Reset messages
     errorMessage.textContent = '';
@@ -36,7 +44,7 @@ document.getElementById('saveChanges').addEventListener('click', async function 
     }
 
     try {
-        const response = await fetch('http://localhost:3000/updateAccount', {
+        const response = await fetch(`http://localhost:3000/updateAccount?email=${encodeURIComponent(userEmail)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -60,17 +68,36 @@ document.getElementById('saveChanges').addEventListener('click', async function 
         }
     } catch (error) {
         errorMessage.textContent = 'Error: Unable to connect to server.';
+        console.error('Update error:', error);
     }
 });
 
-// Simulating pre-filled data from localStorage
-document.addEventListener('DOMContentLoaded', function () {
+// Modified DOMContentLoaded event to load both email and username
+document.addEventListener('DOMContentLoaded', async function () {
     const email = localStorage.getItem('userEmail');
+    const errorMessage = document.getElementById('errorMessage');
 
-    if (email) {
-        document.getElementById('email').value = email;
-    } else {
-        console.error('Email not found in localStorage.');
-        document.getElementById('errorMessage').textContent = 'Error: No email found. Please log in again.';
+    if (!email) {
+        errorMessage.textContent = 'Error: No email found. Please log in again.';
+        return;
+    }
+
+    // Set the email field
+    document.getElementById('email').value = email;
+    
+    try {
+        // Fetch user data
+        const response = await fetch(`http://localhost:3000/getUserData?email=${encodeURIComponent(email)}`);
+        const data = await response.json();
+        
+        if (response.ok && data) {
+            // Set the username field
+            document.getElementById('username').value = data.username || '';
+        } else {
+            errorMessage.textContent = data.message || 'Error loading user data.';
+        }
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        errorMessage.textContent = 'Error: Unable to connect to server.';
     }
 });
