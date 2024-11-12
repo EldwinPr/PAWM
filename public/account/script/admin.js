@@ -5,20 +5,12 @@ let currentUserEmail = null;
 // Fetch and display users
 async function fetchUsers() {
     try {
-        // Get email from localStorage for authentication
         const userEmail = localStorage.getItem('userEmail');
         if (!userEmail) {
             window.location.href = '../login/login.html';
             return;
         }
 
-        // Fetch single user data first to check admin status
-        const userResponse = await fetch(`http://localhost:3000/getUserData?email=${encodeURIComponent(userEmail)}`);
-        if (!userResponse.ok) {
-            throw new Error('Failed to authenticate');
-        }
-        
-        // Now fetch all users
         const response = await fetch('http://localhost:3000/getAllUsers');
         if (!response.ok) {
             throw new Error('Failed to fetch users');
@@ -64,17 +56,14 @@ function displayUsers(usersToDisplay) {
             <td>${escapeHtml(user.email || '')}</td>
             <td>
                 <div class="progress-bar">
-                    <div class="progress" style="width: ${progressScore}%"></div>
-                    <span>${progressScore}%</span>
+                    <div class="progress" style="width: ${progressScore}%">
+                        <span>${progressScore}%</span>
+                    </div>
                 </div>
             </td>
             <td>
-                <button class="btn btn-primary btn-sm" onclick="editUser('${user.email}')">
-                    Edit
-                </button>
-                <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.email}')">
-                    Delete
-                </button>
+                <button class="btn btn-primary btn-sm" onclick="editUser('${user.email}')">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.email}')">Delete</button>
             </td>
         `;
         tbody.appendChild(tr);
@@ -85,12 +74,10 @@ function displayUsers(usersToDisplay) {
 function updateStats() {
     document.getElementById('totalUsers').textContent = users.length;
     
-    // Calculate active users (users with progress)
     const activeUsers = users.filter(user => user.progress && 
         (user.progress.Drag || user.progress.Fill || user.progress.Mult)).length;
     document.getElementById('activeUsers').textContent = activeUsers;
     
-    // Calculate new users (registered today)
     const today = new Date().toISOString().split('T')[0];
     const newUsers = users.filter(user => 
         user.createdAt && user.createdAt.split('T')[0] === today).length;
@@ -227,7 +214,7 @@ document.getElementById('editUserForm').addEventListener('submit', async (e) => 
     }
 });
 
-// Utility functions remain the same...
+// Utility functions
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;

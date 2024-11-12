@@ -1,3 +1,12 @@
+async function checkLoginStatus() {
+    const userEmail = localStorage.getItem('userEmail');
+    if (!userEmail) {
+        window.location.href = '../login/login.html';
+        return false;
+    }
+    return true;
+}
+
 document.getElementById('saveChanges').addEventListener('click', async function (e) {
     e.preventDefault();
 
@@ -72,10 +81,16 @@ document.getElementById('saveChanges').addEventListener('click', async function 
     }
 });
 
+// admin panel button handler
+document.getElementById('adminPanelBtn').addEventListener('click', function() {
+    window.location.href = 'admin.html'; 
+});
+
 // Modified DOMContentLoaded event to load both email and username
 document.addEventListener('DOMContentLoaded', async function () {
     const email = localStorage.getItem('userEmail');
     const errorMessage = document.getElementById('errorMessage');
+    const adminPanelBtn = document.getElementById('adminPanelBtn');
 
     if (!email) {
         errorMessage.textContent = 'Error: No email found. Please log in again.';
@@ -93,6 +108,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (response.ok && data) {
             // Set the username field
             document.getElementById('username').value = data.username || '';
+            
+            // Check if user is admin and show/hide admin panel button
+            if (data.admin) {
+                adminPanelBtn.style.display = 'block';
+            } else {
+                adminPanelBtn.style.display = 'none';
+            }
         } else {
             errorMessage.textContent = data.message || 'Error loading user data.';
         }

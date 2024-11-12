@@ -17,7 +17,7 @@ const registerUser = (req, res) => {
             return res.status(500).json({ message: 'Error hashing password: ' + err.message });
         }
 
-        const sql = `INSERT INTO users (email, username, password) VALUES (?, ?, ?)`;
+        const sql = `INSERT INTO users (email, username, password, admin) VALUES (?, ?, ?, 0)`;
         db.run(sql, [email, username, hashedPassword], function (err) {
             if (err) {
                 return res.status(400).json({ message: 'Error creating user: ' + err.message });
@@ -63,7 +63,7 @@ const loginUser = (req, res) => {
     });
 };
 
-// updates user data
+// Update user data
 const updateUserData = (req, res) => {
     const { username, currentPassword, newPassword } = req.body;
     const userEmail = req.query.email;
@@ -124,28 +124,7 @@ const updateUserData = (req, res) => {
     });
 };
 
-const findUserByEmail = (email) => {
-    return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM users WHERE email = ?';
-
-        console.log(`Running query to find user with email: ${email}`); // Debugging
-
-        db.get(query, [email], (err, row) => {
-            if (err) {
-                console.error('Error finding user by email:', err.message); // Enhanced error logging
-                reject('Error finding user by email: ' + err.message);
-            } else if (!row) {
-                console.warn('No user found for email:', email); // Log when no user is found
-                reject('User not found');
-            } else {
-                console.log('User found:', row); // Log found user details
-                resolve(row);
-            }
-        });
-    });
-};
-
-// Define the getUserData function
+// Get user data
 const getUserData = async (req, res) => {
     const email = req.query.email;
 
@@ -186,7 +165,7 @@ const getAllUsers = async (req, res) => {
             const users = rows.map(row => ({
                 username: row.username,
                 email: row.email,
-                role: row.role || 'user', // Add role
+                role: row.admin ? 'admin' : 'user',
                 progress: {
                     Drag: row.Drag === 1,
                     Fill: row.Fill === 1,
@@ -202,60 +181,20 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-// Add role check middleware
-const checkAdminRole = async (req, res, next) => {
-    const userEmail = localStorage.getItem('userEmail');
-    
-    if (!userEmail) {
-        return res.status(401).json({ message: 'Authentication required' });
-    }
-
-    try {
-        const sql = 'SELECT admin FROM users WHERE email = ?';
-        
-        db.get(sql, [userEmail], (err, user) => {
-            if (err || !user) {
-                return res.status(401).json({ message: 'User not found' });
-            }
-
-            if (!user.admin) {
-                return res.status(403).json({ message: 'Admin access required' });
-            }
-
-            next();
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-};
-
-const updateUserRole = async (req, res) => {
-    const { email, role } = req.body;
-
-    if (!email || !role) {
-        return res.status(400).json({ message: 'Email and role are required' });
-    }
-
-    // Only allow 'admin' or 'user' roles
-    if (role !== 'admin' && role !== 'user') {
-        return res.status(400).json({ message: 'Invalid role' });
-    }
-
-    try {
-        const sql = `UPDATE users SET role = ? WHERE email = ?`;
-        
-        db.run(sql, [role, email], function(err) {
+// Helper function to find user by email
+const findUserByEmail = (email) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM users WHERE email = ?';
+        db.get(query, [email], (err, row) => {
             if (err) {
-                return res.status(500).json({ message: 'Error updating role: ' + err.message });
+                reject('Error finding user by email: ' + err.message);
+            } else if (!row) {
+                reject('User not found');
+            } else {
+                resolve(row);
             }
-            if (this.changes === 0) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-            res.status(200).json({ message: 'Role updated successfully' });
         });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
+    });
 };
 
 // Delete user
@@ -292,14 +231,40 @@ const deleteUser = async (req, res) => {
     }
 };
 
-// Export the new functions along with existing ones
+// Check Admin Role
+const checkAdminRole = async (req, res) => {
+    const userEmail = req.query.email;
+    
+    if (!userEmail) {
+        return res.status(400).json({ message: 'Email is required' });
+    }
+
+    const sql = 'SELECT admin FROM users WHERE email = ?';
+    
+    db.get(sql, [userEmail], (err, user) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error checking admin role: ' + err.message });
+        }
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (!user.admin) {
+            return res.status(403).json({ message: 'Not an admin user' });
+        }
+
+        res.status(200).json({ message: 'Admin role verified', isAdmin: true });
+    });
+};
+
+// Export all functions
 module.exports = {
     registerUser,
     loginUser,
     getUserData,
     updateUserData,
-    checkAdminRole,
-    updateUserRole,
     getAllUsers,
+    checkAdminRole,
     deleteUser
 };

@@ -7,6 +7,35 @@
     <link rel="stylesheet" href="../navbar/navbar.css">
     <link rel="stylesheet" href="./style/admin.css">
 <body>
+    <script>
+        (async function() {
+            try {
+                const userEmail = localStorage.getItem('userEmail');
+                console.log('Checking user email:', userEmail);
+                
+                if (!userEmail) {
+                    console.log('No user email found, redirecting to login');
+                    window.location.href = '../login/login.html';
+                    return;
+                }
+
+                const response = await fetch(`http://localhost:3000/checkAdminRole?email=${encodeURIComponent(userEmail)}`);
+                const data = await response.json();
+                console.log('Admin check response:', data);
+
+                if (!response.ok || !data.isAdmin) {
+                    console.log('Not admin, redirecting to index');
+                    window.location.href = '../index.html';
+                    return;
+                }
+                console.log('Admin check passed, allowing access');
+            } catch (error) {
+                console.error('Error checking admin status:', error);
+                window.location.href = '../index.html';
+            }
+        })();
+    </script>
+    
     <nav class="navbar">
         <a href="#" class="logo" onclick="window.location.href='../index.html'">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
@@ -118,5 +147,6 @@
     </footer>
 
     <script src="script/admin.js"></script>
+    <script src="../navbar/navbar.js"></script>
     </body>
 </html>
