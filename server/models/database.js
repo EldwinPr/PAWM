@@ -23,7 +23,8 @@ const db = new sqlite3.Database(dbPath, (err) => {
             CREATE TABLE IF NOT EXISTS users (
                 email TEXT PRIMARY KEY UNIQUE,
                 username TEXT UNIQUE,
-                password TEXT
+                password TEXT,
+                admin BOOLEAN DEFAULT 0
             )
         `);
 

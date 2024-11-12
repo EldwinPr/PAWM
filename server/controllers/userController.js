@@ -164,9 +164,142 @@ const getUserData = async (req, res) => {
     }
 };
 
+// Get all users
+const getAllUsers = async (req, res) => {
+    try {
+        const sql = `
+            SELECT users.*, 
+                   user_progress.Drag, 
+                   user_progress.Fill, 
+                   user_progress.Mult,
+                   user_progress.score
+            FROM users 
+            LEFT JOIN user_progress ON users.email = user_progress.user_email
+        `;
+        
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error fetching users: ' + err.message });
+            }
+
+            // Format the data
+            const users = rows.map(row => ({
+                username: row.username,
+                email: row.email,
+                role: row.role || 'user', // Add role
+                progress: {
+                    Drag: row.Drag === 1,
+                    Fill: row.Fill === 1,
+                    Mult: row.Mult === 1,
+                    score: row.score
+                }
+            }));
+
+            res.status(200).json(users);
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+// Add role check middleware
+const checkAdminRole = async (req, res, next) => {
+    const userEmail = localStorage.getItem('userEmail');
+    
+    if (!userEmail) {
+        return res.status(401).json({ message: 'Authentication required' });
+    }
+
+    try {
+        const sql = 'SELECT admin FROM users WHERE email = ?';
+        
+        db.get(sql, [userEmail], (err, user) => {
+            if (err || !user) {
+                return res.status(401).json({ message: 'User not found' });
+            }
+
+            if (!user.admin) {
+                return res.status(403).json({ message: 'Admin access required' });
+            }
+
+            next();
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+const updateUserRole = async (req, res) => {
+    const { email, role } = req.body;
+
+    if (!email || !role) {
+        return res.status(400).json({ message: 'Email and role are required' });
+    }
+
+    // Only allow 'admin' or 'user' roles
+    if (role !== 'admin' && role !== 'user') {
+        return res.status(400).json({ message: 'Invalid role' });
+    }
+
+    try {
+        const sql = `UPDATE users SET role = ? WHERE email = ?`;
+        
+        db.run(sql, [role, email], function(err) {
+            if (err) {
+                return res.status(500).json({ message: 'Error updating role: ' + err.message });
+            }
+            if (this.changes === 0) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.status(200).json({ message: 'Role updated successfully' });
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+// Delete user
+const deleteUser = async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+        return res.status(400).json({ message: 'Email is required' });
+    }
+
+    try {
+        // First delete from user_progress
+        const deleteProgressSql = 'DELETE FROM user_progress WHERE user_email = ?';
+        await new Promise((resolve, reject) => {
+            db.run(deleteProgressSql, [email], (err) => {
+                if (err) reject(err);
+                resolve();
+            });
+        });
+
+        // Then delete from users
+        const deleteUserSql = 'DELETE FROM users WHERE email = ?';
+        await new Promise((resolve, reject) => {
+            db.run(deleteUserSql, [email], function(err) {
+                if (err) reject(err);
+                if (this.changes === 0) reject(new Error('User not found'));
+                resolve();
+            });
+        });
+
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting user: ' + error.message });
+    }
+};
+
+// Export the new functions along with existing ones
 module.exports = {
     registerUser,
     loginUser,
     getUserData,
-    updateUserData
+    updateUserData,
+    checkAdminRole,
+    updateUserRole,
+    getAllUsers,
+    deleteUser
 };
