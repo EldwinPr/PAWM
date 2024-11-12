@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyLearn - Fill in the Blanks</title>
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="window.location.href='../index.html'">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+            <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="../materi/materi.html">Materi</a></li>
+            <li><a href="../Latihan/latihan.html">Latihan</a></li>
+            <li><a href="../online-comp.html">Online Compiler</a></li>
+            <li><a id="akun" href="../account/Account.html">Akun</a></li>
+            <li><button id="log-out" class="logout-btn">Log Out</button></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav> 
+
+    <main>
+        <div class="content-section">
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            <div id="quiz-container">
+                <!-- Questions will be dynamically inserted here -->
+                <button id="submit-btn" class="quiz-button" onclick="checkAnswer()">Submit Answer</button>
+            </div>
+            <div id="result"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>
+    </footer>
+
+    <script src="../navbar/navbar.js"></script>
+    <script src="./script/fill.js"></script>
+</body>
+</html>

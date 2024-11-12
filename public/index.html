@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pylearn - Belajar Python Interaktif</title>
+    <meta name="description" content="Belajar Python dengan cara yang interaktif dan menyenangkan di Pylearn. Materi dan latihan tersedia untuk semua tingkat kemampuan.">
+    <style>
+        :root {
+            --primary-color: #3670a1;
+            --secondary-color: #ffc107;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .gradient-section {
+            background: linear-gradient(135deg, #1e1e1e, var(--primary-color));
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .header-text h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header-text p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .title-image {
+            width: 150px;
+            animation: rotate 10s linear infinite;
+        }
+
+        .start-btn, .login-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .start-btn:hover, .login-btn:hover {
+            background-color: #ffa000;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .login-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+
+        .yellow-section {
+            background-color: var(--secondary-color);
+            padding: 4rem 0;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 300px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .card img {
+            width: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-text h1 {
+                font-size: 3rem;
+            }
+
+            .header-text p {
+                font-size: 1.2rem;
+            }
+
+            .start-btn, .login-btn {
+                font-size: 1rem;
+                padding: 0.8rem 1.6rem;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .header-text p {
+                font-size: 1rem;
+            }
+
+            .title-image {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="gradient-section">
+        <button class="login-btn" id="loginBtn">Login</button>
+        <div class="container">
+            <div class="header">
+                <img class="title-image" src="https://cdn.iconscout.com/icon/free/png-256/free-python-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-vol-5-pack-logos-icons-2945099.png?f=webp&w=256" alt="Python Logo">
+                <div class="header-text">
+                    <h1><span style="color: var(--secondary-color);">Py</span>learn</h1>
+                    <p>Belajar Python dengan cara yang interaktif dan menyenangkan</p>
+                    <button class="start-btn" id="startBtn">Mulai Belajar</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="yellow-section">
+        <div class="container">
+            <div class="content">
+                <article class="card" onclick="window.location.href='materi/materi.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Materi Icon">
+                    <h2>Materi</h2>
+                    <p>Pelajari dasar-dasar Python hingga konsep lanjutan dengan materi yang terstruktur.</p>
+                </article>
+                <article class="card" onclick="window.location.href='Latihan/latihan.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="Latihan Icon">
+                    <h2>Latihan</h2>
+                    <p>Uji pemahaman Anda dengan latihan interaktif dan proyek-proyek menarik.</p>
+                </article>
+                <article class="card" onclick="window.location.href='online-comp.html'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Compiler Icon">
+                    <h2>Online Compiler</h2>
+                    <p>Tulis dan jalankan kode Python Anda secara langsung di browser.</p>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Pylearn | Belajar Python dengan mudah dan menyenangkan</p>
+    </footer>
+
+    <script>
+        document.getElementById('startBtn').addEventListener('click', function() {
+            document.querySelector('.yellow-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            observer.observe(card);
+        });
+
+        // login button
+        document.addEventListener('DOMContentLoaded', function () {
+            const loginBtn = document.getElementById('loginBtn');
+
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                loginBtn.textContent = 'Akun';
+                loginBtn.onclick = function () {
+                    window.location.href = 'account/Account.html';
+                };
+            } else {
+                loginBtn.onclick = function () {
+                    window.location.href = 'account/login.html';
+                };
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PyLearn - Drag and Drop Exercise</title>
+        <link rel="stylesheet" href="../navbar/navbar.css">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="#" class="logo" onclick="window.location.href='../index.html'">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+                <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../materi/materi.html">Materi</a></li>
+                <li><a href="../Latihan/latihan.html">Latihan</a></li>
+                <li><a href="../online-comp.html">Online Compiler</a></li>
+                <li><a id="akun" href="../account/Account.html">Akun</a></li>
+                <li><button id="log-out" class="logout-btn">Log Out</button></li>
+            </ul>
+            <button class="mobile-menu-btn">☰</button>
+        </nav>
+
+        <main>
+            <div class="content-section">
+                <h2>Drag and Drop Exercise</h2>
+                <p>Arrange the code snippets to create a valid Python print statement:</p>
+
+                <!-- Sentence to Complete -->
+                <div class="sentence-container">
+                    <p style="width: 100%; text-align: center; margin-bottom: 10px; font-size: 1.1rem;">
+                        Output: Hello World
+                    </p>
+                    <div class="word-slot dropzone" id="dropzone1"></div>
+                    <div class="word-slot dropzone" id="dropzone2"></div>
+                </div>
+
+                <!-- Draggable Words -->
+                <div class="drag-container" id="answer-container">
+                    <div id="draggable1" class="draggable" draggable="true">print</div>
+                    <div id="draggable2" class="draggable" draggable="true">("Hello World")</div>
+                    <div id="draggable3" class="draggable" draggable="true">System.out.println</div>
+                </div>
+
+                <button id="resetButton" class="quiz-button">Reset</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>
+        </footer>
+
+        <script src="../navbar/navbar.js"></script>
+        <script src="./script/drag.js"></script>
+    </body>
+</html>

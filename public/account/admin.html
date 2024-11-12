@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyLearn Admin Dashboard</title>
+    <link rel="stylesheet" href="../navbar/navbar.css">
+    <link rel="stylesheet" href="./style/admin.css">
+<body>
+    <script>
+        (async function() {
+            try {
+                const userEmail = localStorage.getItem('userEmail');
+                console.log('Checking user email:', userEmail);
+                
+                if (!userEmail) {
+                    console.log('No user email found, redirecting to login');
+                    window.location.href = '../login/login.html';
+                    return;
+                }
+
+                const response = await fetch(`http://localhost:3000/checkAdminRole?email=${encodeURIComponent(userEmail)}`);
+                const data = await response.json();
+                console.log('Admin check response:', data);
+
+                if (!response.ok || !data.isAdmin) {
+                    console.log('Not admin, redirecting to index');
+                    window.location.href = '../index.html';
+                    return;
+                }
+                console.log('Admin check passed, allowing access');
+            } catch (error) {
+                console.error('Error checking admin status:', error);
+                window.location.href = '../index.html';
+            }
+        })();
+    </script>
+    
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="window.location.href='../index.html'">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
+            <span><span style="color: var(--secondary-color);">Py</span>learn</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="../materi/materi.html">Materi</a></li>
+            <li><a href="../Latihan/latihan.html">Latihan</a></li>
+            <li><a href="../online-comp.html">Online Compiler</a></li>
+            <li><a href="../account/Account.html">Akun</a></li>
+            <li><button id="log-out" class="logout-btn">Log Out</button></li>
+        </ul>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <main>
+        <div class="container">
+            <header>
+                <div class="logo">
+                    <span style="margin-left: 2rem; font-size: 1.8rem; color: var(--primary-color);">Admin Dashboard</span>
+                </div>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <p id="totalUsers">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Users</h3>
+                    <p id="activeUsers">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <h3>New Users (Today)</h3>
+                    <p id="newUsers">Loading...</p>
+                </div>
+            </div>
+
+            <div class="form-group search-bar">
+                <input type="text" placeholder="Search users..." onkeyup="searchUsers(this.value)">
+            </div>
+
+            <button class="btn btn-primary" style="margin-bottom: 2rem;" onclick="openAddUserModal()">Add New User</button>
+
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Progress</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- User data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Edit User Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editModal')">&times;</span>
+            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Edit User</h2>
+            <form id="editUserForm">
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPassword">New Password (leave blank to keep current)</label>
+                    <input type="password" id="editPassword">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addModal')">&times;</span>
+            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Add New User</h2>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label for="newUsername">Username</label>
+                    <input type="text" id="newUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="newEmail">Email</label>
+                    <input type="email" id="newEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add User</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 PyLearn | Belajar Python dengan mudah</p>
+    </footer>
+
+    <script src="script/admin.js"></script>
+    <script src="../navbar/navbar.js"></script>
+    </body>
+</html>
