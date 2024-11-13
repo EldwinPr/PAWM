@@ -6,7 +6,7 @@ async function getScores() {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/progress?email=${encodeURIComponent(userEmail)}`);
+        const response = await fetch(`${config.API_URL}/progress?email=${encodeURIComponent(userEmail)}`);
         const progress = await response.json();
         
         const today = new Date().toISOString().split('T')[0];
@@ -64,7 +64,7 @@ async function resetProgress() {
     if (!userEmail) return;
 
     try {
-        const response = await fetch('http://localhost:3000/progress/reset', {
+        const response = await fetch('${config.API_URL}/progress/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

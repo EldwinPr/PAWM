@@ -179,7 +179,7 @@ async function updateProgress(exerciseType, newScore) {
         if (!userEmail) return;
 
         // First, get current progress
-        const response = await fetch(`http://localhost:3000/progress?email=${encodeURIComponent(userEmail)}`);
+        const response = await fetch(`${config.API_URL}/progress?email=${encodeURIComponent(userEmail)}`);
         const currentProgress = await response.json();
         
         // Create update object based on exercise type
@@ -207,7 +207,7 @@ async function updateProgress(exerciseType, newScore) {
         }
 
         // Send update to server
-        const updateResponse = await fetch('http://localhost:3000/progress/update', {
+        const updateResponse = await fetch('${config.API_URL}/progress/update', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

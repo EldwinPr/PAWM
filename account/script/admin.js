@@ -11,7 +11,7 @@ async function fetchUsers() {
             return;
         }
 
-        const response = await fetch('http://localhost:3000/getAllUsers');
+        const response = await fetch('${config.API_URL}/getAllUsers');
         if (!response.ok) {
             throw new Error('Failed to fetch users');
         }
@@ -100,7 +100,7 @@ function searchUsers(query) {
 // User management functions
 async function editUser(email) {
     try {
-        const userResponse = await fetch(`http://localhost:3000/getUserData?email=${encodeURIComponent(email)}`);
+        const userResponse = await fetch(`${config.API_URL}/getUserData?email=${encodeURIComponent(email)}`);
         if (!userResponse.ok) {
             throw new Error('Failed to fetch user data');
         }
@@ -125,7 +125,7 @@ async function deleteUser(email) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/deleteUser?email=${encodeURIComponent(email)}`, {
+        const response = await fetch(`${config.API_URL}/deleteUser?email=${encodeURIComponent(email)}`, {
             method: 'DELETE'
         });
 
@@ -155,7 +155,7 @@ document.getElementById('addUserForm').addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch('http://localhost:3000/register', {
+        const response = await fetch('${config.API_URL}/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -189,7 +189,7 @@ document.getElementById('editUserForm').addEventListener('submit', async (e) => 
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/updateAccount?email=${encodeURIComponent(currentUserEmail)}`, {
+        const response = await fetch(`${config.API_URL}/updateAccount?email=${encodeURIComponent(currentUserEmail)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

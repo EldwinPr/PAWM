@@ -53,7 +53,7 @@ document.getElementById('saveChanges').addEventListener('click', async function 
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/updateAccount?email=${encodeURIComponent(userEmail)}`, {
+        const response = await fetch(`${config.API_URL}/updateAccount?email=${encodeURIComponent(userEmail)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     
     try {
         // Fetch user data
-        const response = await fetch(`http://localhost:3000/getUserData?email=${encodeURIComponent(email)}`);
+        const response = await fetch(`${config.API_URL}/getUserData?email=${encodeURIComponent(email)}`);
         const data = await response.json();
         
         if (response.ok && data) {

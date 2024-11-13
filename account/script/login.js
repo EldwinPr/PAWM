@@ -21,7 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     try {
         // Make the login request to the server
-        const response = await fetch('http://localhost:3000/login', {
+        const response = await fetch('${config.API_URL}/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
