@@ -178,7 +178,7 @@ async function updateProgress(exerciseType, newScore) {
         }
 
         // Send update to server
-        const updateResponse = await fetch('${config.API_URL}/progress/update', {
+        const updateResponse = await fetch(`${config.API_URL}/progress/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

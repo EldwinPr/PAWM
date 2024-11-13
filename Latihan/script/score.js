@@ -64,7 +64,7 @@ async function resetProgress() {
     if (!userEmail) return;
 
     try {
-        const response = await fetch('${config.API_URL}/progress/reset', {
+        const response = await fetch(`${config.API_URL}/progress/reset`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
