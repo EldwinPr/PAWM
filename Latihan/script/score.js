@@ -49,7 +49,7 @@ function getExerciseUrl(type) {
         case 'fill':
             return '../Latihan/fill.html';
         case 'mult':
-            return '../Latihan/mult.html';
+            return '../Latihan/multiple-choice.html';
         default:
             return '#';
     }
