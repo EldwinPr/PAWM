@@ -20,7 +20,7 @@
                     return;
                 }
 
-                const response = await fetch(`http://localhost:3000/checkAdminRole?email=${encodeURIComponent(userEmail)}`);
+                const response = await fetch(`${config.API_URL}/checkAdminRole?email=${encodeURIComponent(userEmail)}`);
                 const data = await response.json();
                 console.log('Admin check response:', data);
 

@@ -11,7 +11,7 @@ async function fetchUsers() {
             return;
         }
 
-        const response = await fetch('${config.API_URL}/getAllUsers');
+        const response = await fetch(`${config.API_URL}/getAllUsers`);
         if (!response.ok) {
             throw new Error('Failed to fetch users');
         }
@@ -155,7 +155,7 @@ document.getElementById('addUserForm').addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch('${config.API_URL}/register', {
+        const response = await fetch(`${config.API_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
