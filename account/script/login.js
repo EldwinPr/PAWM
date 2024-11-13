@@ -21,7 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
     try {
         // Make the login request to the server
-        const response = await fetch('${config.API_URL}/login', {
+        const response = await fetch(`${config.API_URL}/login`, {  // Changed to backticks here
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +32,6 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         const data = await response.json();
 
         if (response.ok) {
-            
             // Store the email in localStorage for later use
             localStorage.setItem('userEmail', email);
 
