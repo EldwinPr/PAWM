@@ -4,5 +4,3 @@ const config = {
 
 // Make sure config is available globally
 window.config = config;
-// If using ES modules, add:
-export default config;
