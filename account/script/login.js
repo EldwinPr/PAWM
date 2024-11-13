@@ -20,12 +20,12 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     errorMessage.textContent = '';
 
     try {
-        // Make the login request to the server
-        const response = await fetch(`${config.API_URL}/login`, {  // Changed to backticks here
+        const response = await fetch(`${config.API_URL}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',  // Added this line
             body: JSON.stringify({ email, password }),
         });
 
