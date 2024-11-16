@@ -113,20 +113,20 @@ function checkAnswers() {
         return;
     }
 
-    // Calculate score
+    // Calculate score and update progress
     quizData.forEach((question) => {
         if (question.userAnswer === question.correctAnswer) {
             score += 10;
         }
     });
 
-    // Save score using config helper
-    config.saveScore('multiple_choice', score).then((saved) => {
+    // Update progress before showing results
+    updateProgress('mult', score).then(() => {
+        // Create answers HTML...
         const resultElement = document.getElementById('result');
         resultElement.textContent = `You scored ${score} out of 100 points!`;
-        if (saved) {
-            resultElement.textContent += ' (New high score!)';
-        }
+        
+        // Rest of your existing code...
         showResults();
     });
 }
