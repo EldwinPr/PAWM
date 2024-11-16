@@ -7,13 +7,14 @@ async function fetchUsers() {
     try {
         const userEmail = localStorage.getItem('userEmail');
         if (!userEmail) {
-            window.location.href = '../login/login.html';
+            window.location.href = '../account/login.html';
             return;
         }
 
         const response = await fetch(`${config.API_URL}/getAllUsers`);
         if (!response.ok) {
-            throw new Error('Failed to fetch users');
+            const error = await response.json();
+            throw new Error(error.message || 'Failed to fetch users');
         }
         
         const data = await response.json();
@@ -22,7 +23,7 @@ async function fetchUsers() {
         updateStats();
     } catch (error) {
         console.error('Error fetching users:', error);
-        showNotification('Error loading users. Please try again.', 'error');
+        showNotification('Error loading users: ' + error.message, 'error');
     }
 }
 
@@ -43,12 +44,32 @@ function displayUsers(usersToDisplay) {
     }
 
     usersToDisplay.forEach(user => {
-        // Get progress data if it exists
-        let progressScore = 0;
+        // Calculate average progress
+        let totalScore = 0;
+        let completedExercises = 0;
+        
         if (user.progress) {
-            const completedExercises = ['Drag', 'Fill', 'Mult'].filter(type => user.progress[type]).length;
-            progressScore = Math.round((completedExercises / 3) * 100);
+            if (user.progress.Drag) {
+                totalScore += user.progress.drag_score || 0;
+                completedExercises++;
+            }
+            if (user.progress.Fill) {
+                totalScore += user.progress.fill_score || 0;
+                completedExercises++;
+            }
+            if (user.progress.Mult) {
+                totalScore += user.progress.mult_score || 0;
+                completedExercises++;
+            }
         }
+
+        const averageScore = completedExercises > 0 
+            ? Math.round(totalScore / completedExercises) 
+            : 0;
+
+        const progressPercentage = completedExercises > 0 
+            ? Math.round((completedExercises / 3) * 100)
+            : 0;
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -56,9 +77,12 @@ function displayUsers(usersToDisplay) {
             <td>${escapeHtml(user.email || '')}</td>
             <td>
                 <div class="progress-bar">
-                    <div class="progress" style="width: ${progressScore}%">
-                        <span>${progressScore}%</span>
+                    <div class="progress" style="width: ${progressPercentage}%">
+                        <span>${progressPercentage}% Complete</span>
                     </div>
+                </div>
+                <div class="score-info">
+                    Average Score: ${averageScore}%
                 </div>
             </td>
             <td>
@@ -74,14 +98,22 @@ function displayUsers(usersToDisplay) {
 function updateStats() {
     document.getElementById('totalUsers').textContent = users.length;
     
-    const activeUsers = users.filter(user => user.progress && 
-        (user.progress.Drag || user.progress.Fill || user.progress.Mult)).length;
+    const activeUsers = users.filter(user => {
+        if (!user.progress) return false;
+        return user.progress.Drag || user.progress.Fill || user.progress.Mult;
+    }).length;
+    
     document.getElementById('activeUsers').textContent = activeUsers;
     
-    const today = new Date().toISOString().split('T')[0];
-    const newUsers = users.filter(user => 
-        user.createdAt && user.createdAt.split('T')[0] === today).length;
-    document.getElementById('newUsers').textContent = newUsers || 0;
+    // Can add more detailed stats here
+    const completedExercises = users.reduce((total, user) => {
+        if (!user.progress) return total;
+        return total + (user.progress.Drag ? 1 : 0) +
+                      (user.progress.Fill ? 1 : 0) +
+                      (user.progress.Mult ? 1 : 0);
+    }, 0);
+    
+    document.getElementById('completedExercises').textContent = completedExercises;
 }
 
 // Search functionality with debounce

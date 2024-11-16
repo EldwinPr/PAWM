@@ -14,21 +14,21 @@ async function getScores() {
         const scores = [
             {
                 exercise: "Drag and Drop",
-                score: progress.Drag ? progress.score || 0 : 0,
+                score: progress.drag_score || 0,
                 date: progress.Drag ? today : '-',
                 completed: progress.Drag,
                 type: "drag"
             },
             {
                 exercise: "Fill in The Blanks",
-                score: progress.Fill ? progress.score || 0 : 0,
+                score: progress.fill_score || 0,
                 date: progress.Fill ? today : '-',
                 completed: progress.Fill,
                 type: "fill"
             },
             {
                 exercise: "Multiple Choice",
-                score: progress.Mult ? progress.score || 0 : 0,
+                score: progress.mult_score || 0,
                 date: progress.Mult ? today : '-',
                 completed: progress.Mult,
                 type: "mult"
