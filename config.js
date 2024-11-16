@@ -2,7 +2,7 @@
 
 const config = {
     // Base API URL - replace with your actual API endpoint
-    API_URL: 'https://pylearn-backend.vercel.app',
+    API_URL: 'https://api.pylearn.com',
     
     // Helper function to validate user session
     checkUserSession: function() {
