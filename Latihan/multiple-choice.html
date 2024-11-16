@@ -24,22 +24,21 @@
         <button class="mobile-menu-btn">☰</button>
     </nav>
 
-    <main>
+    <div role="main">
         <div class="content-section">
             <div id="quiz-container">
-                <h2>Multiple Choice Quiz</h2>
-                <!-- Quiz questions will be dynamically inserted here -->
-                <button onclick="checkAnswers()" id="submit-btn" class="quiz-button">Submit Answers</button>
+                <!-- Questions will be inserted here by JavaScript -->
+                <button id="submit-btn" class="quiz-button" onclick="checkAnswers()">Submit Answers</button>
             </div>
-            <div id="result-container">
+    
+            <div id="result-container" style="display: none;">
                 <h2>Quiz Results</h2>
                 <div id="result"></div>
-                <div id="score-breakdown"></div>
                 <div id="answers"></div>
-                <button onclick="restartQuiz()" class="quiz-button">Restart Quiz</button>
+                <button class="quiz-button" onclick="restartQuiz()">Try Again</button>
             </div>
         </div>
-    </main>
+    </div>
 
     <footer>
         <p>&copy; 2024 PyLearn | Belajar Python dengan mudah</p>

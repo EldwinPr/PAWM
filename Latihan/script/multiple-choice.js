@@ -100,11 +100,17 @@ function selectOption(element, questionIndex, optionIndex) {
 function checkAnswers() {
     let score = 0;
     let unansweredQuestions = false;
+    const resultElement = document.getElementById('result');
+    const resultContainer = document.getElementById('result-container');
     
     // Check if all questions are answered
     quizData.forEach((question) => {
         if (question.userAnswer === undefined) {
             unansweredQuestions = true;
+        }
+        // Calculate score as we go
+        if (question.userAnswer === question.correctAnswer) {
+            score += 10; // Each question is worth 10 points
         }
     });
 
@@ -113,22 +119,51 @@ function checkAnswers() {
         return;
     }
 
-    // Calculate score and update progress
-    quizData.forEach((question) => {
-        if (question.userAnswer === question.correctAnswer) {
-            score += 10;
-        }
-    });
-
-    // Update progress before showing results
+    // Update progress
     updateProgress('mult', score).then(() => {
-        // Create answers HTML...
-        const resultElement = document.getElementById('result');
+        // Add score to the result element
         resultElement.textContent = `You scored ${score} out of 100 points!`;
         
-        // Show results
-        showResults();
+        // Create a breakdown of answers
+        const answersDiv = document.getElementById('answers');
+        answersDiv.innerHTML = '<h3>Answer Breakdown:</h3>';
+        
+        quizData.forEach((question, index) => {
+            const isCorrect = question.userAnswer === question.correctAnswer;
+            answersDiv.innerHTML += `
+                <div class="answer-item ${isCorrect ? 'correct' : 'incorrect'}">
+                    <p><strong>Question ${index + 1}:</strong> ${question.question}</p>
+                    <p>Your answer: ${question.options[question.userAnswer]}</p>
+                    <p>Correct answer: ${question.options[question.correctAnswer]}</p>
+                </div>
+            `;
+        });
+
+        // Hide quiz container and show result container
+        document.getElementById('quiz-container').style.display = 'none';
+        resultContainer.style.display = 'block';
     });
+}
+
+// Restart the quiz
+function restartQuiz() {
+    const quizContainer = document.getElementById('quiz-container');
+    const resultContainer = document.getElementById('result-container');
+    
+    // Reset quiz state
+    quizData.forEach(question => delete question.userAnswer);
+    
+    // Clear selected options
+    document.querySelectorAll('.option').forEach(option => 
+        option.classList.remove('selected', 'correct', 'incorrect')
+    );
+    
+    // Hide results and show quiz
+    resultContainer.style.display = 'none';
+    quizContainer.style.display = 'block';
+    
+    // Re-render the quiz
+    renderQuiz();
 }
 
 // Show results container
@@ -143,29 +178,6 @@ function showResults() {
             resultContainer.style.opacity = 1;
         }, 50);
     }, 300);
-}
-
-// Restart the quiz
-function restartQuiz() {
-    const quizContainer = document.getElementById('quiz-container');
-    const resultContainer = document.getElementById('result-container');
-    resultContainer.style.opacity = 0;
-    setTimeout(() => {
-        resultContainer.style.display = 'none';
-        quizContainer.style.display = 'block';
-        setTimeout(() => {
-            quizContainer.style.opacity = 1;
-        }, 50);
-    }, 300);
-    
-    // Reset quiz state
-    quizData.forEach(question => delete question.userAnswer);
-    document.querySelectorAll('.option').forEach(option => 
-        option.classList.remove('selected', 'correct', 'incorrect')
-    );
-    
-    // Re-render the quiz
-    renderQuiz();
 }
 
 // Initialize the quiz when the page loads
