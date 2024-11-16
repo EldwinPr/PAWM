@@ -73,22 +73,20 @@ function updateProgressBar() {
     progressBar.style.width = `${progress}%`;
 }
 
-function showFinalResult() {
-    const quizContainer = document.getElementById('quiz-container');
-    const submitBtn = document.getElementById('submit-btn');
-    
-    // Save score using config helper
-    config.saveScore('fill_blanks', score).then((saved) => {
-        quizContainer.innerHTML = `
-            <h2>Quiz Selesaih2>
-            <div class="score-breakdown">
-                <p>Your final score: ${score} out of 100 points${saved ? ' (New high score!)' : ''}</p>
-                <p>(${score/20} correct answers out of 5 questions)</p>
-            </div>
-        `;
-        submitBtn.textContent = 'Try Again';
-        submitBtn.onclick = restartQuiz;
-    });
+function checkAnswer() {
+    const userAnswer = document.getElementById('answer').value.trim();
+    const correctAnswer = questions[currentQuestion].answer;
+    const resultElement = document.getElementById('result');
+
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        score += 20; // Each correct answer is worth 20 points
+        resultElement.innerHTML = '<p class="correct">Correct! +20 points</p>';
+    } else {
+        resultElement.innerHTML = `<p class="incorrect">Incorrect. The correct answer is "${correctAnswer}".</p>`;
+    }
+
+    document.getElementById('submit-btn').textContent = 'Next Question';
+    document.getElementById('submit-btn').onclick = nextQuestion;
 }
 
 function nextQuestion() {
