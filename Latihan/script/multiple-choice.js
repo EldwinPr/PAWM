@@ -126,7 +126,7 @@ function checkAnswers() {
         const resultElement = document.getElementById('result');
         resultElement.textContent = `You scored ${score} out of 100 points!`;
         
-        // Rest of your existing code...
+        // Show results
         showResults();
     });
 }
