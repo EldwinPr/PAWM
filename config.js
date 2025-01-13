@@ -1,5 +1,5 @@
 const config = {
-    API_URL: 'http://13.229.113.45'
+    API_URL: 'https://pylearn-backend.vercel.app'
 };
 
 // Make sure config is available globally
